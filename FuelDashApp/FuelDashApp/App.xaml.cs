@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FuelDashApp.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +12,9 @@ namespace FuelDashApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            var landingPage = new LandingPage();
+
+            MainPage = new NavigationPage(landingPage);
         }
 
         protected override void OnStart()

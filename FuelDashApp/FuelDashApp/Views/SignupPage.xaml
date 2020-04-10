@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cc="clr-namespace:FuelDashApp.Views.CustomControls"
+             x:Class="FuelDashApp.Views.SignupPage"
+              NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid>
+            <Image  Source="SplashScreen.jpeg"  Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <Grid RowSpacing="0"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Frame HorizontalOptions="FillAndExpand" Padding="0" VerticalOptions="CenterAndExpand" BackgroundColor="White" HeightRequest="400">
+                <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Grid RowSpacing="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="7"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="8"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="End" HeightRequest="24" WidthRequest="24" VerticalOptions="Start" Padding="0">
+                            <Image Source="close.png"  HorizontalOptions="Center"  VerticalOptions="Center"     HeightRequest="14" WidthRequest="14" Margin="1">
+                            </Image>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="CancelImageOfPopUpTapped"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <Label Grid.Column="1" Grid.Row="1" Text="Sign Up"   TextColor="{StaticResource CharcoalGrey}"  HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" FontSize="16" FontFamily="Lato-Regular.ttf#Lato-Regular"/>
+
+                        <Frame Padding="5" HasShadow="False" Grid.Column="1"  Grid.Row="3" OutlineColor="#dedede"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5" >
+                            <Grid ColumnSpacing="0" Padding="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="28"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="user.png" BackgroundColor="White" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14"  HeightRequest="11"></Image>
+                                <Entry x:Name="FirstName" BackgroundColor="White" HorizontalTextAlignment="Start" Text="{Binding FirstName,Mode=TwoWay}"  Placeholder="First Name"  PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="CenterAndExpand" Grid.Column="1" FontSize="14" FontFamily="Lato-Regular.ttf#Lato-Regular">
+                                    <Entry.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
+                                    </Entry.HeightRequest>
+                                </Entry>
+                            </Grid>
+                        </Frame>
+
+                        <Frame Padding="5" HasShadow="False" Grid.Column="1"  Grid.Row="4" OutlineColor="#dedede"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5" >
+                            <Grid ColumnSpacing="0" Padding="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="28"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="user.png" BackgroundColor="White" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14"  HeightRequest="11"></Image>
+                                <Entry x:Name="LastName" BackgroundColor="White" HorizontalTextAlignment="Start" Text="{Binding LastName,Mode=TwoWay}"  Placeholder="Last Name"  PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="CenterAndExpand" Grid.Column="1" FontSize="14" FontFamily="Lato-Regular.ttf#Lato-Regular">
+                                    <Entry.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
+                                    </Entry.HeightRequest>
+                                </Entry>
+                            </Grid>
+                        </Frame>
+
+                        <Frame Padding="5" HasShadow="False" Grid.Column="1"  Grid.Row="5" OutlineColor="#dedede"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5" >
+                            <Grid ColumnSpacing="0" Padding="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="28"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="emailicon.png" BackgroundColor="White" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14"  HeightRequest="11"></Image>
+                                <Entry x:Name="EmailId" BackgroundColor="White" HorizontalTextAlignment="Start" Text="{Binding EmailId,Mode=TwoWay}"  Placeholder="Email"  PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="CenterAndExpand" Grid.Column="1" FontSize="14" FontFamily="Lato-Regular.ttf#Lato-Regular">
+                                    <Entry.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
+                                    </Entry.HeightRequest>
+                                </Entry>
+                            </Grid>
+                        </Frame>
+
+                        <Frame Padding="5" Grid.Column="1" Grid.Row="6" HasShadow="False" OutlineColor="#dedede" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5" >
+
+                            <Grid ColumnSpacing="0" Padding="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="28"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="lockicon.png" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="11" HeightRequest="11"></Image>
+                                <Entry  x:Name="Password" IsPassword="True" Text="{Binding Password,Mode=TwoWay}"  Placeholder="Password" PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   Grid.Column="1" HorizontalTextAlignment="Start"  FontSize="14" FontFamily="Lato-Regular.ttf#Lato-Regular">
+                                    <Entry.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double"  iOS="35" Android="40"/>
+                                    </Entry.HeightRequest>
+                                </Entry>
+                            </Grid>
+                        </Frame>
+
+                        <Frame Padding="5" Grid.Column="1" Grid.Row="7" HasShadow="False" OutlineColor="#dedede" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5" >
+
+                            <Grid ColumnSpacing="0" Padding="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="28"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="lockicon.png" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="11" HeightRequest="11"></Image>
+                                <Entry  x:Name="Repassword" IsPassword="True" Text="{Binding ConfirmPassword,Mode=TwoWay}"  Placeholder="Re-type password" PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" VerticalOptions="Center"    Grid.Column="1" HorizontalTextAlignment="Start" FontSize="14" FontFamily="Lato-Regular.ttf#Lato-Regular">
+                                    <Entry.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
+                                    </Entry.HeightRequest>
+                                </Entry>
+                            </Grid>
+                        </Frame>
+
+                        <!--Style="@style/NoShadowButton"-->
+                        <cc:CustomButton Margin="0"  Grid.Column="1" Grid.Row="8" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Text="Create Account"  TextColor="White" BackgroundColor="{StaticResource ThemeRedColor}"    CustomBorderColor="#AF1E2D"  FontFamily="Lato-Regular.ttf#Lato-Regular"
+                                         CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5"   FontSize="16">
+                            <cc:CustomButton.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double" iOS="30" Android="40"/>
+                            </cc:CustomButton.HeightRequest>
+                        </cc:CustomButton>
+
+                        <Grid Grid.Row="9" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0"  BackgroundColor="White"  HorizontalTextAlignment="End" Text="Already have an account?" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="#a8b6c8" FontSize="12" FontFamily="Lato-Regular.ttf#Lato-Regular"/>
+                            <Label Grid.Column="1" TextColor="{StaticResource ThemeRedColor}" BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Start" Text="Sign in here" FontFamily="Lato-Regular.ttf#Lato-Regular"  FontSize="12">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Login_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </Grid>
+                </ScrollView>
+            </Frame>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
