@@ -43,6 +43,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Headway.Data">
+      <HintPath>C:\Headway.Workforce\Headway.Workforce\Headway.Workforce\Headway.API\bin\Headway.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Headway.Recruiting">
+      <HintPath>C:\Headway.Workforce\Headway.Workforce\Headway.Workforce\Headway.API\bin\Headway.Recruiting.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -107,6 +113,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessDTO\RoleDTO.cs" />
+    <Compile Include="BusinessDTO\User.cs" />
+    <Compile Include="Sql\AutomatedEmailSettings.cs" />
+    <Compile Include="BusinessDTO\LoginDTO.cs" />
+    <Compile Include="BusinessDTO\ResponseDTO.cs" />
     <Compile Include="BusinessDTO\UserDTO.cs" />
     <Compile Include="BusinessServices\IServices\IUserService.cs" />
     <Compile Include="BusinessServices\Service\UserService.cs" />
