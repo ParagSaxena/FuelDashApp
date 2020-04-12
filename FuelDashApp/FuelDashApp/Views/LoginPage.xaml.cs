@@ -26,14 +26,14 @@ namespace FuelDashApp.Views
            await Navigation.PopAsync();
         }
 
-        private void ForgotPassword_Tapped(object sender, EventArgs e)
+        private async void ForgotPassword_Tapped(object sender, EventArgs e)
         {
-           
+            await Navigation.PushAsync(new ForgotPasswordPage());
         }
 
-        private void Signup_Tapped(object sender, EventArgs e)
+        private async void Signup_Tapped(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new SignupPage());
         }
 
         private async void Login_Clicked(object sender, EventArgs e)

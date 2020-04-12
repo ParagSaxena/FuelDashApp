@@ -32,9 +32,9 @@ namespace FuelDashApp.Views
             await Navigation.PopAsync();
         }
 
-        public void Login_Tapped(object sender, EventArgs e)
+        public async void Login_Tapped(object sender, EventArgs e)
         {
-           
+            await Navigation.PushAsync(new LoginPage());
         }
 
         private void SignupButton_Clicked(object sender, EventArgs e)
