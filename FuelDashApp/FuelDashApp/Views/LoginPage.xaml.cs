@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FuelDashApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,12 @@ namespace FuelDashApp.Views
 	{
 		public LoginPage ()
 		{
-			InitializeComponent ();
+			InitializeComponent();
+            this.BindingContext = new LoginPageViewModel();
 		}
+
+        public LoginPageViewModel ViewModel => this.BindingContext as LoginPageViewModel;
+
         private async void CancelImageOfPopUpTapped(object sender, EventArgs e)
         {
            await Navigation.PopAsync();
@@ -33,7 +38,7 @@ namespace FuelDashApp.Views
 
         private async void Login_Clicked(object sender, EventArgs e)
         {
-           
+            await ViewModel.LoginAsync();
         }
 
     }

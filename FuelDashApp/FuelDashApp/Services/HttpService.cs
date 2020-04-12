@@ -60,5 +60,30 @@ namespace FuelDashApp.Services
             return baseResponse;
 
         }
+
+        public async Task<BaseResponse> PostData(string url, string data = "", Action<BaseResponse> callback = null)
+        {
+            BaseResponse roleRepsonse = new BaseResponse();
+            var uri = new Uri(url);
+            try
+            {
+                var content = new StringContent(data, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                HttpClient client = new HttpClient();
+                response = await client.PostAsync(uri,content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    roleRepsonse = JsonConvert.DeserializeObject<BaseResponse>(responseContent);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0} URL:{1}", ex.Message, url);
+            }
+            callback?.Invoke(roleRepsonse);
+
+            return roleRepsonse;
+        }
     }
 }

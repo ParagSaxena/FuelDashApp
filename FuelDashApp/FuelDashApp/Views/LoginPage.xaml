@@ -45,7 +45,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Image Source="emailicon.png"  Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14" BackgroundColor="White"  HeightRequest="11"></Image>
-                                    <Entry x:Name="EmailId" BackgroundColor="White" HorizontalTextAlignment="Start" Text="{Binding EmailId,Mode=TwoWay}"  Placeholder="Email"  PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" FontSize="14" 
+                                    <Entry x:Name="EmailId" BackgroundColor="White" HorizontalTextAlignment="Start" Text="{Binding Email,Mode=TwoWay}"  Placeholder="Email"  PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" FontSize="14" 
                          VerticalOptions="CenterAndExpand" Grid.Column="1" FontFamily="Lato-Regular.ttf#Lato-Regular">
                                         <Entry.HeightRequest>
                                             <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
@@ -102,6 +102,15 @@
                     </ScrollView>
                 </Frame>
             </Grid>
+
+            <ActivityIndicator HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               HeightRequest="50"
+                               WidthRequest="50"
+                               Color="Red"
+                               IsRunning="{Binding OperationInProgress}"
+                               IsVisible="{Binding OperationInProgress}">
+            </ActivityIndicator>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
