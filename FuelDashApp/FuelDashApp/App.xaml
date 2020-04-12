@@ -3,6 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FuelDashApp.App">
     <Application.Resources>
+            <ResourceDictionary>
+                <Color x:Key="ThemeRedColor">#af1e2d</Color>
+                <Color x:Key="CharcoalGrey">#323b45</Color>
+                <OnPlatform x:TypeArguments="x:String" x:Key="BoldFont">
+                    <On Platform="Android" Value="Lato-Bold.ttf#Lato" />
+                    <On Platform="iOS" Value="Lato-Bold" />
+                </OnPlatform>
+                <OnPlatform x:TypeArguments="x:String" x:Key="NormalFont">
+                    <On Platform="Android" Value="Lato-Regular.ttf#Lato" />
+                    <On Platform="iOS" Value="Lato-Regular" />
+                </OnPlatform>
+                <OnPlatform x:TypeArguments="x:String" x:Key="MediumFont">
+                    <On Platform="Android" Value="Lato-Medium.ttf#Lato" />
+                    <On Platform="iOS" Value="Lato-Medium" />
+                </OnPlatform>
+                <x:Double x:Key="LabelFontSize20">60</x:Double>
+                <x:Double x:Key="LabelFontSize18">40</x:Double>
+                <x:Double x:Key="LabelFontSize10">40</x:Double>
+                <x:Double x:Key="LabelFontSize12">40</x:Double>
+                <x:Double x:Key="LabelFontSize16">40</x:Double>
+                <x:Double x:Key="RatingsListHeight">40</x:Double>
+                <x:Double x:Key="RatingsListWidth">40</x:Double>
+                <x:Double x:Key="MyDocumentHeight">40</x:Double>
+                <x:Double x:Key="StarSize">40</x:Double>
+                <x:Double x:Key="StarWidth">40</x:Double>
+                <x:Double x:Key="PdfHeight">40</x:Double>
+                <x:Double x:Key="RatingItemWidth">40</x:Double>
+                <x:Double x:Key="PdfWidth">40</x:Double>
+                <x:Double x:Key="LabelFontSize14">40</x:Double>
+                <x:Double x:Key="MyDocumentListSize">40</x:Double>
+                <x:Double x:Key="LocationIcon">40</x:Double>
+                <x:Double x:Key="Star">40</x:Double>
+                <x:Double x:Key="Profilestar">40</x:Double>
+                <x:Double x:Key="Jobstar">50</x:Double>
+                <x:Double x:Key="MyjobItemSpacing">40</x:Double>
+                <x:Double x:Key="CompletedItemSpacing">40</x:Double>
+                <x:Double x:Key="SwapItemSize">40</x:Double>
+                <x:Double x:Key="DaysItemSize">40</x:Double>
+                <x:Double x:Key="ResumeBuilderWidth">40</x:Double>
+                <x:Double x:Key="ResumeBuilderHeight">40</x:Double>
+            </ResourceDictionary>
 
     </Application.Resources>
 </Application>
