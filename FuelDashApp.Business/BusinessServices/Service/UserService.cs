@@ -13,9 +13,9 @@ using Headway.Recruiting;
 
 namespace FuelDashApp.Business.BusinessServices.Service
 {
-    public class UserService :Base,  IUserService
+    public class UserService : Base, IUserService
     {
-        
+
         public string GetApi()
         {
             return "Welcome in the portal of FUELDASH.";
@@ -30,16 +30,20 @@ namespace FuelDashApp.Business.BusinessServices.Service
                 if ((!string.IsNullOrEmpty(email)) && (!string.IsNullOrEmpty(password)))
                 {
                     SqlParameter paramEmail = new SqlParameter("email", email);
-                    // SqlParameter paramPassword = new SqlParameter("Password", password);
-                    DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetUserByEmail", new SqlParameter[] { paramEmail });
+                    SqlParameter paramPassword = new SqlParameter("Password", password);
+                    DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetUserByLogin", new SqlParameter[] { paramEmail, paramPassword });
                     BusinessDTO.User userData = new BusinessDTO.User();
-                    if (dtUser != null && dtUser.Rows.Count > 0 && password == dtUser.Rows[0]["Password"].ToString())
+                    if (dtUser != null && dtUser.Rows.Count > 0)
                     {
                         response.LoginResult = LoginResultType.Success;
+                        response.IsSuccess = true;
+                        response.Message = "login success";
+
                     }
                     else
                     {
                         response.LoginResult = LoginResultType.InvalidLogin;
+                        response.Message = "fail";
                     }
                 }
             }
@@ -54,20 +58,33 @@ namespace FuelDashApp.Business.BusinessServices.Service
         public int UserRegistration(BusinessDTO.User userData)
         {
             int userId = 0;
-            SqlParameter[] sqlParams = new SqlParameter[4];
-            sqlParams[0] = new SqlParameter("RoleId", userData.RoleId);
-            sqlParams[1] = new SqlParameter("FirstName", userData.FirstName);
-            sqlParams[2] = new SqlParameter("LastName", userData.LastName);
-            sqlParams[3] = new SqlParameter("Password", userData.Password);
-            sqlParams[4] = new SqlParameter("Email", userData.Email);
-            sqlParams[5] = new SqlParameter("PhoneNumber", userData.PhoneNumber);
-            sqlParams[6] = new SqlParameter("Address", userData.Address);
-            sqlParams[7] = new SqlParameter("City", userData.City);
-            sqlParams[8] = new SqlParameter("State", userData.State);
-            sqlParams[9] = new SqlParameter("Zip", userData.Zip);
-            sqlParams[10] = new SqlParameter("ProfileImage", userData.ProfileImage);
-            sqlParams[11] = new SqlParameter("IsActive", userData.IsActive);
-            object objResult =SqlClientRMXProd.ExecuteScalar("udsp_User_Insert", sqlParams);
+            SqlParameter[] sqlParams = new SqlParameter[22];
+            //sqlParams[0] = new SqlParameter("UserId", userData.UserId);
+            sqlParams[1] = new SqlParameter("RoleId", userData.RoleId);
+            sqlParams[2] = new SqlParameter("Password", userData.Password);
+            sqlParams[3] = new SqlParameter("IsActive", userData.IsActive);
+            sqlParams[4] = new SqlParameter("FirstName", userData.FirstName);
+            sqlParams[5] = new SqlParameter("HomeAddress", userData.HomeAddress);
+            sqlParams[6] = new SqlParameter("WMTechID", userData.WMTechID);
+            sqlParams[7] = new SqlParameter("ClockedIn", userData.ClockedIn);
+            sqlParams[8] = new SqlParameter("Company", userData.Company);
+            sqlParams[9] = new SqlParameter("Department", userData.Department);
+            sqlParams[10] = new SqlParameter("LaborRateCost", userData.LaborRateCost);
+            sqlParams[11] = new SqlParameter("LaborRateSell", userData.LaborRateSell);
+            sqlParams[12] = new SqlParameter("LastName", userData.LastName);
+            sqlParams[13] = new SqlParameter("CurrentLocation", userData.CurrentLocation);
+            sqlParams[14] = new SqlParameter("PayRate", userData.PayRate);
+            sqlParams[15] = new SqlParameter("PhoneNumber", userData.PhoneNumber);
+            sqlParams[16] = new SqlParameter("ProfilePicture", userData.ProfilePicture);
+            sqlParams[17] = new SqlParameter("TimeSheets", userData.TimeSheets);
+            sqlParams[18] = new SqlParameter("Title", userData.Title);
+            sqlParams[19] = new SqlParameter("Truck", userData.Truck);
+            sqlParams[20] = new SqlParameter("Type", userData.Type);
+           // sqlParams[21] = new SqlParameter("CreationDate", userData.CreationDate);
+            //sqlParams[22] = new SqlParameter("ModifiedDate", userData.ModifiedDate);
+            sqlParams[21] = new SqlParameter("Email", userData.Email);
+            sqlParams[0] = new SqlParameter("UniqueID", userData.UniqueID);
+            object objResult = SqlClientRMXProd.ExecuteScalar("udsp_User_Insert", sqlParams);
             if ((objResult != null) && (Int32.TryParse(objResult.ToString(), out userId)))
             {
                 return userId;
@@ -90,15 +107,15 @@ namespace FuelDashApp.Business.BusinessServices.Service
                         MailMessage PwReminderEmail = new MailMessage
                         {
                             // email from address
-                            From = new MailAddress(ConfigurationManager.AppSettings["MailFrom"])
+                            From = new MailAddress(ConfigurationManager.AppSettings["SupportEmail"])
                         };
                         // email to address
                         PwReminderEmail.To.Add(email);
                         // email subject
-                        PwReminderEmail.Subject = ConfigurationManager.AppSettings["MailSubject"];
+                        PwReminderEmail.Subject = "FuelDashp password";
                         // email body
                         //PwReminderEmail.Body = emailSettings.Body;
-                        string body = "<p>You were trying to retrive your password from FuelDash app. <br/><br/>Your password is " + dtUser.Rows[0]["Password"].ToString() + ">  </p>";
+                        string body = "<p>You were trying to retrive your password from FuelDash app. <br/><br/>Your password is " + dtUser.Rows[0]["Password"].ToString() + "  </p>";
                         PwReminderEmail.Body = body;
                         PwReminderEmail.IsBodyHtml = true;
                         SmtpClient smtpClient = new SmtpClient(ConfigurationManager.AppSettings["SMTPServer"], Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]));
@@ -116,9 +133,10 @@ namespace FuelDashApp.Business.BusinessServices.Service
                         {
                             response.Message = exception.Message;
                         }
+                        response.IsSuccess = (String.IsNullOrEmpty(response.Message)) ? true : false;
                         response.Message = (String.IsNullOrEmpty(response.Message)) ? "We have sent your password on your registered email." : "";
 
-
+                       
                     }
                     else
                     {
@@ -143,21 +161,27 @@ namespace FuelDashApp.Business.BusinessServices.Service
             List<RoleDTO> list = new List<RoleDTO>();
             try
             {
-               
+
                 DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetRole");
                 if (dtUser != null && dtUser.Rows.Count > 0)
                 {
-                    RoleDTO role = new RoleDTO();
-                    foreach (RoleDTO obj in dtUser.Rows)
+                    int i = 0;
+                    foreach (DataRow row in dtUser.Rows)
                     {
-                        role.RoleId = obj.RoleId;
-                        role.RoleName = obj.RoleName;
-                        role.IsActive = obj.IsActive;
+                        // if (dtUser != null && dtUser.Rows.Count > 0)
+                        // {
+                        RoleDTO role = new RoleDTO();
+
+                        role.RoleId = Convert.ToInt32(dtUser.Rows[i]["RoleId"].ToString());
+                        role.RoleName = dtUser.Rows[i]["RoleName"].ToString();
+                        role.IsActive = Convert.ToBoolean(dtUser.Rows[i]["IsActive"].ToString());
+                        // }
+                        list.Add(role);
+                        i++;
                     }
-                    list.Add(role);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { }
             return list;
         }

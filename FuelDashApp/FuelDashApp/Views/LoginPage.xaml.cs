@@ -28,17 +28,31 @@ namespace FuelDashApp.Views
 
         private async void ForgotPassword_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ForgotPasswordPage());
+            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(ForgotPasswordPage))
+            {
+                await Navigation.PushAsync(new ForgotPasswordPage());
+            }
         }
 
         private async void Signup_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SignupPage());
+            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(SignupPage))
+            {
+                await Navigation.PushAsync(new SignupPage());
+            }
         }
 
         private async void Login_Clicked(object sender, EventArgs e)
         {
+
             await ViewModel.LoginAsync();
+            if (ViewModel.IsValid)
+            {
+                if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(HomePage))
+                {
+                    await Navigation.PushAsync(new HomePage());
+                }
+            }
         }
 
     }

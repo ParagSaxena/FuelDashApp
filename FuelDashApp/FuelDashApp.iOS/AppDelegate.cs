@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using FuelDashApp.iOS.CustomRenderer;
 using UIKit;
+using Xamarin.Forms;
 
 namespace FuelDashApp.iOS
 {
@@ -24,7 +26,7 @@ namespace FuelDashApp.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-
+            DependencyService.Register<MessageIOS>();
             return base.FinishedLaunching(app, options);
         }
     }

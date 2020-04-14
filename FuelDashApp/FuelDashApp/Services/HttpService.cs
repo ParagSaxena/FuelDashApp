@@ -14,23 +14,28 @@ namespace FuelDashApp.Services
         public async Task<List<Role>> GetRoles(string url, Action<List<Role>> callback = null)
         {
             List<Role> roleRepsonse = new List<Role>();
-            var uri = new Uri(url);
-            try
-            {
-                HttpResponseMessage response = null;
-                HttpClient client = new HttpClient();
-                response = await client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    roleRepsonse = JsonConvert.DeserializeObject<List<Role>>(responseContent);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(@"ERROR {0} URL:{1}", ex.Message, url);
-            }
-            callback?.Invoke(roleRepsonse);
+            roleRepsonse.Add(new Role { RoleName = "Admin", RoleId = 1, IsActive = true });
+            roleRepsonse.Add(new Role { RoleName = "Manager", RoleId = 2, IsActive = true });
+            roleRepsonse.Add(new Role { RoleName = "Technician", RoleId = 3, IsActive = true });
+            roleRepsonse.Add(new Role { RoleName = "Office", RoleId = 4, IsActive = true });
+            roleRepsonse.Add(new Role { RoleName = "Customer", RoleId = 5, IsActive = true });
+            //var uri = new Uri(url);
+            //try
+            //{
+            //    HttpResponseMessage response = null;
+            //    HttpClient client = new HttpClient();
+            //    response = await client.GetAsync(uri);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var responseContent = await response.Content.ReadAsStringAsync();
+            //        roleRepsonse = JsonConvert.DeserializeObject<List<Role>>(responseContent);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine(@"ERROR {0} URL:{1}", ex.Message, url);
+            //}
+            //callback?.Invoke(roleRepsonse);
 
             return roleRepsonse;
         }

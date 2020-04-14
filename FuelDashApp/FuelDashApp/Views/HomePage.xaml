@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FuelDashApp.Views.HomePage" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="backgroundColor">#AF1E2D</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  BackgroundColor="White" >
+        <Grid RowSpacing="0" BackgroundColor="White" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid x:Name="mainGrid" RowSpacing="0" Padding="0" Grid.Row="0" BackgroundColor="White" >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnIdiom x:TypeArguments="GridLength" Tablet="90" Phone="60"/>
+                        </RowDefinition.Height>
+                    </RowDefinition>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                    <Grid x:Name="toolBar" BackgroundColor="Red">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <!--<Image Margin="10,0,0,0" Grid.Column="0" Grid.Row="1" Source="back.png" x:Name="backImage" HorizontalOptions="Start" VerticalOptions="CenterAndExpand">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </Image.GestureRecognizers>
+                        </Image>-->
+                        <StackLayout Grid.Column="1" Grid.Row="1"   HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                            <Label  Text="Home" x:Name="getReadyText" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" TextColor="White" 
+                            FontFamily="Lato-Medium.ttf#Lato-Medium" />
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+                <StackLayout Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <!--<syncfusion:SfListView 
+                        x:Name="GetReadyItemListView"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        ItemsSource="{Binding IconList}"
+                        AutoFitMode="Height"
+                        IsScrollBarVisible="True"
+                        ItemSpacing="5"
+                        SelectionBackgroundColor="Transparent"
+                        BackgroundColor="White" 
+                        Padding="0,10,0,0" 
+                        QueryItemSize="ListView_QueryItemSize"
+                        ItemTapped="MenuItemListView_ItemTapped"
+                        AllowSwiping="True"
+                        SwipeStarted="GetReadyItemListView_SwipeStarted"
+                        SwipeEnded="GetReadyItemListView_SwipeEnded">
+                        <syncfusion:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Frame Grid.Row="0" Grid.Column="0" HasShadow="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  CornerRadius="20"  Padding="1">
+                                        <Image Source="{Binding ImageSrc}"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" >
+                                        </Image>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </syncfusion:SfListView.ItemTemplate>
+                        <syncfusion:SfListView.LeftSwipeTemplate>
+                            <DataTemplate x:Name="LeftSwipeTemplate">
+
+                                <Grid BackgroundColor="Transparent" 
+                                  HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
+                                  Grid.Column="0"/>
+
+
+
+                            </DataTemplate>
+                        </syncfusion:SfListView.LeftSwipeTemplate>
+                        <syncfusion:SfListView.LayoutManager>
+                            <syncfusion:GridLayout SpanCount="2" />
+
+                        </syncfusion:SfListView.LayoutManager>
+
+                    </syncfusion:SfListView>-->
+                </StackLayout>
+
+            </Grid>
+            <!--<Grid.GestureRecognizers>
+                <SwipeGestureRecognizer   Direction="Right"  Command="{Binding SwipeCommand}"  />
+            </Grid.GestureRecognizers>-->
+        </Grid>
+       
+    </StackLayout>
+</ContentPage>

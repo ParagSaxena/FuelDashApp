@@ -1,4 +1,6 @@
-﻿using FuelDashApp.ViewModels;
+﻿using FuelDashApp.Models;
+using FuelDashApp.Services;
+using FuelDashApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +25,17 @@ namespace FuelDashApp.Views
 
         private async void SignIn_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SignupPage());
+            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(SignupPage))
+            {
+                await Navigation.PushAsync(new SignupPage());
+            }
         }
 
-        private void ForgotPassword_Clicked(object sender, EventArgs e)
+        private async void ForgotPassword_Clicked(object sender, EventArgs e)
         {
-            ViewModel.ForgotPasswordAsync();
+            BaseResponse response=await ViewModel.ForgotPasswordAsync();
+            var Toast = DependencyService.Get<IMessage>();
+            Toast.LongAlert(response.Message); 
         }
 
         private async void CancelImageOfPopUpTapped(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using FuelDashApp.Providers;
+﻿using FuelDashApp.Models;
+using FuelDashApp.Providers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,24 +26,28 @@ namespace FuelDashApp.ViewModels
             }
         }
 
-        public async Task ForgotPasswordAsync()
+        public async Task<BaseResponse> ForgotPasswordAsync()
         {
-            if(OperationInProgress)
-            {
-                return;
-            }
+            //if(OperationInProgress)
+            //{
+            //    return ;
+            //}
             OperationInProgress = true;
-            var result = await ForgotPasswordProvider.ChangePasswordAsync(Email);
-            if (result)
-            {
+            LoginPageViewModel login = new LoginPageViewModel();
+            login.Email = Email;
+            var result = await new APIData().PostData<BaseResponse>("User/ForgotPassword", login, false);
 
+           // var result = await ForgotPasswordProvider.ChangePasswordAsync(Email);
+            if (result!=null && result.LoginResult==0)
+            {
+               
             }
             else
             {
 
             }
             OperationInProgress = false;
-
+            return result;
         }
     }
 }

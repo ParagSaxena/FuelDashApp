@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Text;
 
-namespace FuelDashApp.Business.BusinessDTO
+namespace FuelDashApp.Models
 {
-    public class User
+    public class UserModel
     {
         public int UserId { get; set; }
-        public int RoleId { get; set; }
+        public int RoleID { get; set; }
         public string Password { get; set; }
         public bool IsActive { get; set; }
         public string FirstName { get; set; }
         public string HomeAddress { get; set; }
-        public string WMTechID{get;set;}
+        public string WMTechID { get; set; }
         public string ClockedIn { get; set; }
         public string Company { get; set; }
         public string Department { get; set; }
@@ -32,7 +31,7 @@ namespace FuelDashApp.Business.BusinessDTO
         public DateTime ModifiedDate { get; set; }
         public string Email { get; set; }
         public string UniqueID { get; set; }
-             
-        
+
+
     }
 }

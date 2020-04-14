@@ -8,6 +8,11 @@ namespace FuelDashApp
 {
     public partial class App : Application
     {
+        public static bool IsPopupButtonEnable { get; set; }
+        public static bool IsUserLoggedIn { get; set; }
+        public static int UserId { get; set; }
+        public static double ScreenHeight { get; set; }
+        public static double ScreenWidth { get; set; }
         public App()
         {
             InitializeComponent();
@@ -17,9 +22,21 @@ namespace FuelDashApp
             MainPage = new NavigationPage(landingPage);
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-            // Handle when your app starts
+            await CheckLoginAsync();
+            base.OnStart();
+
+        }
+        public async System.Threading.Tasks.Task CheckLoginAsync()
+        {
+            if (Current.Properties.ContainsKey("UserId"))
+            {
+                if (Current.MainPage.Navigation.NavigationStack.Count == 0 || Current.MainPage.Navigation.NavigationStack.GetType() != typeof(HomePage))
+                {
+                    await Current.MainPage.Navigation.PushAsync(new HomePage());
+                }
+            }
         }
 
         protected override void OnSleep()

@@ -18,11 +18,17 @@ namespace FuelDashApp.Views
 		}
         private async void Login_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new LoginPage());
+            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(LoginPage))
+            {
+                await Navigation.PushAsync(new LoginPage());
+            }
         }
         private async void Signup_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SignupPage());
+            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(SignupPage))
+            {
+                await Navigation.PushAsync(new SignupPage());
+            }
         }
 
     }
