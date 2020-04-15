@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FuelDashApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,16 +15,9 @@ namespace FuelDashApp.Views
 	{
 		public HomePage ()
 		{
-			InitializeComponent ();
-            UseWidth();
+			InitializeComponent();
+            this.BindingContext = new HomePageViewModel();
         }
-        private void UseWidth()
-        {
-            toolBar.ColumnDefinitions.Add(new ColumnDefinition { Width = App.ScreenWidth * 0.032 });
-            //backImage.HeightRequest = App.ScreenHeight * 0.0269;
-            getReadyText.FontSize = App.ScreenWidth * 0.0506;
-        }
-       
         protected override bool OnBackButtonPressed()
         {
             return true;
@@ -34,5 +28,49 @@ namespace FuelDashApp.Views
             base.OnDisappearing();
         }
 
+        private void Logout_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProfileImage_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Dashboard_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private void JobSearch_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Notification_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Mail_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Add_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MenuItemListView_ItemTapped(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
+        {
+
+        }
+
+        private void ListView_QueryItemSize(object sender, Syncfusion.ListView.XForms.QueryItemSizeEventArgs e)
+        {
+
+        }
     }
 }
