@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cc="clr-namespace:FuelDashApp.Views.CustomControls"
+             xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             x:Class="FuelDashApp.Views.HomePage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid x:Name="mainGrid" RowSpacing="0" Padding="0" Grid.Row="0" >
+                <Grid.Margin>
+                    <OnPlatform x:TypeArguments="Thickness" iOS="0,17,0,0" Android="0,0,0,0"/>
+                </Grid.Margin>
+                <Grid.RowDefinitions>
+
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnIdiom x:TypeArguments="GridLength" Tablet="90" Phone="60"/>
+                        </RowDefinition.Height>
+                    </RowDefinition>
+
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnPlatform x:TypeArguments="GridLength" iOS="*" Android="*"/>
+                        </RowDefinition.Height>
+                    </RowDefinition>
+
+                    <RowDefinition Height="50"/>
+
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+                <StackLayout x:Name="header"  Grid.Row="0" Orientation="Horizontal"   BackgroundColor="{StaticResource ThemeRedColor}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+                    <Image Source="logo.png" x:Name="logoImage" HorizontalOptions="Start"  VerticalOptions="FillAndExpand" Margin="0" >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Logout_Tapped"/>
+                        </Image.GestureRecognizers>
+
+                    </Image>
+                    <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
+                            <cc:ImageCircle Source="user.png"  x:Name="profileImage" Margin="4" Aspect="AspectFit" HeightRequest="44" WidthRequest="44"  HorizontalOptions="Center" VerticalOptions="Center">
+                                <cc:ImageCircle.GestureRecognizers  Tapped="ProfileImage_Tapped">
+                                    <TapGestureRecognizer Tapped="ProfileImage_Tapped"/>
+                                </cc:ImageCircle.GestureRecognizers>
+                            </cc:ImageCircle>
+                    </StackLayout>
+                </StackLayout>
+                
+                <syncfusion:SfListView  Grid.Row="1" x:Name="MenuItemListView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  ItemsSource="{Binding Items}"  AutoFitMode="Height"  IsScrollBarVisible="True"  ItemSpacing="5"  ItemTapped="MenuItemListView_ItemTapped"  SelectionBackgroundColor="Transparent"  BackgroundColor="White" Padding="0,10,0,0"   QueryItemSize="ListView_QueryItemSize" >
+                    <syncfusion:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  HeightRequest="150">
+                                <Frame  HasShadow="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  CornerRadius="20"  Padding="1">
+                                    <Image Source="logo.png"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" >
+
+                                    </Image>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </syncfusion:SfListView.ItemTemplate>
+                    <syncfusion:SfListView.LayoutManager>
+                        <syncfusion:GridLayout SpanCount="2" />
+                    </syncfusion:SfListView.LayoutManager>
+                </syncfusion:SfListView>
+                
+            </Grid>
+        </Grid>
+        
+        <ActivityIndicator HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               HeightRequest="50"
+                               WidthRequest="50"
+                               Color="Red"
+                               IsRunning="{Binding OperationInProgress}"
+                               IsVisible="{Binding OperationInProgress}"/>
+    </Grid>
+
+</ContentPage>
