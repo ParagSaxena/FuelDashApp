@@ -23,7 +23,7 @@
                     <OnPlatform x:TypeArguments="x:Double" iOS="45" Android="59"/>
                 </cc:CustomButton.HeightRequest>
             </cc:CustomButton>
-            <cc:CustomButton Grid.Column="3" Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Sign Up" FontSize="16" TextColor="White"  CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5" FontFamily="Lato-Regular.ttf#Lato-Regular"   Margin="0"  Clicked="Signup_Clicked" CustomBorderColor="#AF1E2D">
+            <cc:CustomButton Grid.Column="3" Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Scan QR" FontSize="16" TextColor="White"  CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5" FontFamily="Lato-Regular.ttf#Lato-Regular"   Margin="0"  Clicked="Signup_Clicked" CustomBorderColor="#AF1E2D">
                 <cc:CustomButton.HeightRequest>
                     <OnPlatform x:TypeArguments="x:Double" iOS="45" Android="59"/>
                 </cc:CustomButton.HeightRequest>

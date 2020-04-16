@@ -163,8 +163,11 @@ namespace FuelDashApp.ViewModels
             }
         }
 
-        public SignupPageViewModel()
-        { }
+        public SignupPageViewModel(string name , string email)
+        {
+            FirstName = name;
+            Email = email;
+        }
         public async Task GetRolesAsync()
         {
             if (OperationInProgress)

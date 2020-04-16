@@ -12,7 +12,7 @@ using Xamarin.Forms.Xaml;
 
 namespace FuelDashApp.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+	//[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ForgotPasswordPage : ContentPage
 	{
 		public ForgotPasswordPage ()

@@ -32,10 +32,10 @@ namespace FuelDashApp
         {
             if (Current.Properties.ContainsKey("UserId"))
             {
-                if (Current.MainPage.Navigation.NavigationStack.Count == 0 || Current.MainPage.Navigation.NavigationStack.GetType() != typeof(HomePage))
-                {
-                    await Current.MainPage.Navigation.PushAsync(new HomePage());
-                }
+                //if (Current.MainPage.Navigation.NavigationStack.Count == 0 || Current.MainPage.Navigation.NavigationStack.GetType() != typeof(HomePage))
+                //{
+                //    await Current.MainPage.Navigation.PushAsync(new HomePage());
+                //}
             }
         }
 

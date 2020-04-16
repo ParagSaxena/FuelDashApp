@@ -22,10 +22,16 @@ namespace FuelDashApp.Droid
             base.OnCreate(savedInstanceState);
             App.ScreenWidth = (double)Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density;
             App.ScreenHeight = (double)Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density;
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
             DependencyService.Register<MessageAndroid>();
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }
