@@ -8,6 +8,8 @@ namespace FuelDashApp.Providers
     {
         public const string BASE_URL = HostURL + "api/";
         public const string HostURL = "http://184.164.128.36/";
+        public const string GetDepartmentsApi = "User/GetDepartments";
+        public const string GetPrioritiesApi = "User/GetPriority";
 
     }
 }

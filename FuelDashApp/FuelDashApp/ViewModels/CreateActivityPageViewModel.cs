@@ -1,7 +1,11 @@
 ﻿using FuelDashApp.Helper;
+using FuelDashApp.Models;
+using FuelDashApp.Providers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FuelDashApp.ViewModels
 {
@@ -139,22 +143,74 @@ namespace FuelDashApp.ViewModels
                 }
             }
         }
-        private string _department;
-        public string Department
+        private List<Department> _departments;
+        public List<Department> Departments
         {
             get
             {
-                return _department;
+                return _departments;
             }
             set
             {
-                if (_department != value)
+                if (_departments != value)
                 {
-                    _department = value;
-                    OnPropertChanged(nameof(Department));
+                    _departments = value;
+                    OnPropertChanged(nameof(Departments));
                 }
             }
         }
+
+        private Department _selectedDepartment;
+        public Department SelectedDeparment
+        {
+            get
+            {
+                return _selectedDepartment;
+            }
+            set
+            {
+                if(_selectedDepartment!=value)
+                {
+                    _selectedDepartment = value;
+                    OnPropertChanged(nameof(SelectedDeparment));
+                }
+            }
+        }
+
+        private List<Priority> _priorities;
+        public List<Priority> Priorities
+        {
+            get
+            {
+                return _priorities;
+            }
+            set
+            {
+                if (_priorities != value)
+                {
+                    _priorities = value;
+                    OnPropertChanged(nameof(Priorities));
+                }
+            }
+        }
+
+        private Priority _selectedPriority;
+        public Priority SelectedPriority
+        {
+            get
+            {
+                return _selectedPriority;
+            }
+            set
+            {
+                if (_selectedPriority != value)
+                {
+                    _selectedPriority = value;
+                    OnPropertChanged(nameof(SelectedPriority));
+                }
+            }
+        }
+
 
         public void ParseEamil(string email)
         {
@@ -167,6 +223,18 @@ namespace FuelDashApp.ViewModels
             OnPropertChanged(nameof(Address));
             OnPropertChanged(nameof(ProblemDescription));
 
+        }
+
+        public async Task GetDepartmentsAsync()
+        {
+            Departments = await DepartmentsProvider.GetDepartmentsAsync();
+            SelectedDeparment = Departments?.FirstOrDefault();
+        }
+
+        public async Task GetPrioritiesAsync()
+        {
+            Priorities = await PrioritiesProvider.GetPrioritiesAsync();
+            SelectedPriority = Priorities?.FirstOrDefault();
         }
     }
 
