@@ -20,8 +20,9 @@ namespace FuelDashApp.Views
         {
             if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(LoginPage))
             {
-               // await Navigation.PushAsync(new HomePage());
+                // await Navigation.PushAsync(new HomePage());
                 //await Navigation.PushAsync(new LoginPage());
+                await Navigation.PushAsync(new CreateActivityPage());
             }
         }
         private async void Signup_Clicked(object sender, EventArgs e)

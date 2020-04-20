@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FuelDashApp.Views.CreateActivityPage"
+             xmlns:cc="clr-namespace:FuelDashApp.Views.CustomControls"
+             BackgroundColor="White"
+             Title="Create New Activity">
+    <ContentPage.Content>
+        <Grid Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollView Grid.Row="0">
+                <StackLayout Spacing="8" >
+                    <Entry Placeholder="Service Center" />
+                    <Entry Placeholder="Work Order Number"
+                           Text="{Binding ReferenceNumber}"/>
+                    <Entry Placeholder="Site Number"
+                           Text="{Binding SiteNumber}"/>
+                    <Entry Placeholder="Address"
+                           Text="{Binding Address}"/>
+                    <cc:CustomPicker Placeholder="Priority"/>
+                    <Entry Placeholder="Problem Description"
+                           Text="{Binding ProblemDescription}"/>
+                    <cc:CustomPicker Placeholder="Department"/>
+                    <Entry Placeholder="Received"
+                           Text="{Binding DateReceived}"/>
+                    <Entry Placeholder="Deadline"
+                           Text="{Binding DeadlineDate}"/>
+                    <Editor Placeholder="Copy and Paste Email"
+                            x:Name="EmailTextEditor"
+                            AutoSize="TextChanges"/>
+                    <Button Grid.Row="1"
+                    Text="Format Email"
+                    BackgroundColor="{StaticResource ThemeRedColor}"
+                    TextColor="White"
+                    Margin="0,12,0,0"
+                    HeightRequest="40"
+                    Clicked="FormatEmail_Clicked"/>
+
+                </StackLayout>
+            </ScrollView>
+            <Button Grid.Row="1"
+                    Text="Save"
+                    BackgroundColor="{StaticResource ThemeRedColor}"
+                    TextColor="White"
+                    Margin="0,12,0,0"
+                    HeightRequest="40"/>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

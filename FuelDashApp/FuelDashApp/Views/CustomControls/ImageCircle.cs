@@ -2,7 +2,7 @@
 
 namespace FuelDashApp.Views.CustomControls
 {
-   public class ImageCircle : Image
+    public class ImageCircle : Image
     {
     }
 }
