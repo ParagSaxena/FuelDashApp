@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="CustomRenderers\CircleImageRenderer.cs" />
     <Compile Include="CustomRenderers\CustomButtonRenderer.cs" />
+    <Compile Include="CustomRenderers\CustomPickerRenderer.cs" />
     <Compile Include="CustomRenderers\MessageAndroid.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

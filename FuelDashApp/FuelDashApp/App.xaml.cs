@@ -20,6 +20,7 @@ namespace FuelDashApp
             var landingPage = new LandingPage();
 
             MainPage = new NavigationPage(landingPage);
+            (MainPage as NavigationPage).BarBackgroundColor = (Color)Application.Current.Resources["ThemeRedColor"] ;
         }
 
         protected override async void OnStart()

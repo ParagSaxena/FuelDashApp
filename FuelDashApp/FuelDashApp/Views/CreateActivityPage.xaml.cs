@@ -1,0 +1,29 @@
+﻿using FuelDashApp.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace FuelDashApp.Views
+{
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class CreateActivityPage : ContentPage
+	{
+		public CreateActivityPage()
+		{
+			InitializeComponent ();
+            this.BindingContext = new CreateActivityPageViewModel();
+		}
+
+        public CreateActivityPageViewModel ViewModel => this.BindingContext as CreateActivityPageViewModel;
+
+        private void FormatEmail_Clicked(object sender, EventArgs e)
+        {
+            ViewModel.ParseEamil(EmailTextEditor.Text);
+        }
+    }
+}
