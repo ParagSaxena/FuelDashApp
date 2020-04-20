@@ -14,6 +14,16 @@ namespace FuelDashApp.Business.BusinessServices
         int UserRegistration(User userData);
         ResponseDTO ForgotPassword(string email);
         List<RoleDTO> GetRole();
+        bool GetUserByEmail(string email);
+        List<DepartmentDTO> GetDepartments();
+        List<JobSiteDTO> GetSites();
+        int InsertPasscode(PasscodeDTO data);
+        void UpdatePasscode(PasscodeDTO data);
+        PasscodeDTO GetPasscode();
+        JobSiteDTO GetSitesBySiteID(int siteID);
+        List<PriorityDTO> GetPriority();
+        int InsertWorkOrder(WorkOrderDTO data);
+
         //ResponseDTO Login(string emailAddress, string password);
         //ResponseDTO ForgotPassword(string emailAddress);
         //ResponseDTO Registration(Candidate candidate);

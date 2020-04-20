@@ -10,6 +10,7 @@ using System.Web;
 using FuelDashApp.Business.BusinessDTO;
 using FuelDashApp.Business.Sql;
 using Headway.Recruiting;
+using static FuelDashApp.Business.BusinessDTO.ActivityStatus;
 
 namespace FuelDashApp.Business.BusinessServices.Service
 {
@@ -59,31 +60,31 @@ namespace FuelDashApp.Business.BusinessServices.Service
         {
             int userId = 0;
             SqlParameter[] sqlParams = new SqlParameter[22];
-            //sqlParams[0] = new SqlParameter("UserId", userData.UserId);
-            sqlParams[1] = new SqlParameter("RoleId", userData.RoleId);
-            sqlParams[2] = new SqlParameter("Password", userData.Password);
-            sqlParams[3] = new SqlParameter("IsActive", userData.IsActive);
-            sqlParams[4] = new SqlParameter("FirstName", userData.FirstName);
-            sqlParams[5] = new SqlParameter("HomeAddress", userData.HomeAddress);
-            sqlParams[6] = new SqlParameter("WMTechID", userData.WMTechID);
-            sqlParams[7] = new SqlParameter("ClockedIn", userData.ClockedIn);
-            sqlParams[8] = new SqlParameter("Company", userData.Company);
-            sqlParams[9] = new SqlParameter("Department", userData.Department);
-            sqlParams[10] = new SqlParameter("LaborRateCost", userData.LaborRateCost);
-            sqlParams[11] = new SqlParameter("LaborRateSell", userData.LaborRateSell);
-            sqlParams[12] = new SqlParameter("LastName", userData.LastName);
-            sqlParams[13] = new SqlParameter("CurrentLocation", userData.CurrentLocation);
-            sqlParams[14] = new SqlParameter("PayRate", userData.PayRate);
-            sqlParams[15] = new SqlParameter("PhoneNumber", userData.PhoneNumber);
-            sqlParams[16] = new SqlParameter("ProfilePicture", userData.ProfilePicture);
-            sqlParams[17] = new SqlParameter("TimeSheets", userData.TimeSheets);
-            sqlParams[18] = new SqlParameter("Title", userData.Title);
-            sqlParams[19] = new SqlParameter("Truck", userData.Truck);
-            sqlParams[20] = new SqlParameter("Type", userData.Type);
-           // sqlParams[21] = new SqlParameter("CreationDate", userData.CreationDate);
-            //sqlParams[22] = new SqlParameter("ModifiedDate", userData.ModifiedDate);
-            sqlParams[21] = new SqlParameter("Email", userData.Email);
+
             sqlParams[0] = new SqlParameter("UniqueID", userData.UniqueID);
+            sqlParams[1] = new SqlParameter("RoleId", userData.RoleId);//
+            sqlParams[2] = new SqlParameter("Password", userData.Password);//
+            sqlParams[3] = new SqlParameter("IsActive", userData.IsActive);//
+            sqlParams[4] = new SqlParameter("FirstName", userData.FirstName);//
+            sqlParams[5] = new SqlParameter("HomeAddress", userData.HomeAddress);//
+            sqlParams[6] = new SqlParameter("WMTechID", userData.WMTechID);//
+            sqlParams[7] = new SqlParameter("ClockedIn", userData.ClockedIn);//
+            sqlParams[8] = new SqlParameter("Company", userData.Company);//
+            sqlParams[9] = new SqlParameter("Department", userData.Department);//
+            sqlParams[10] = new SqlParameter("LaborRateCost", userData.LaborRateCost);//
+            sqlParams[11] = new SqlParameter("LaborRateSell", userData.LaborRateSell);//
+            sqlParams[12] = new SqlParameter("LastName", userData.LastName);//
+            sqlParams[13] = new SqlParameter("CurrentLocation", userData.CurrentLocation);//
+            sqlParams[14] = new SqlParameter("PayRate", userData.PayRate);//
+            sqlParams[15] = new SqlParameter("PhoneNumber", userData.PhoneNumber);//
+            sqlParams[16] = new SqlParameter("ProfilePicture", userData.ProfilePicture);//
+            sqlParams[17] = new SqlParameter("TimeSheets", userData.TimeSheets);//
+            sqlParams[18] = new SqlParameter("Title", userData.Title);//
+            sqlParams[19] = new SqlParameter("Truck", userData.Truck);//
+            sqlParams[20] = new SqlParameter("Type", userData.Type);//
+                                                                    // sqlParams[21] = new SqlParameter("CreationDate", userData.CreationDate);
+                                                                    //sqlParams[22] = new SqlParameter("UniqueID", userData.UniqueID);
+            sqlParams[21] = new SqlParameter("Email", userData.Email);
             object objResult = SqlClientRMXProd.ExecuteScalar("udsp_User_Insert", sqlParams);
             if ((objResult != null) && (Int32.TryParse(objResult.ToString(), out userId)))
             {
@@ -91,6 +92,7 @@ namespace FuelDashApp.Business.BusinessServices.Service
             }
             return userId;
         }
+
         public ResponseDTO ForgotPassword(string email)
         {
             ResponseDTO response = new ResponseDTO();
@@ -136,7 +138,7 @@ namespace FuelDashApp.Business.BusinessServices.Service
                         response.IsSuccess = (String.IsNullOrEmpty(response.Message)) ? true : false;
                         response.Message = (String.IsNullOrEmpty(response.Message)) ? "We have sent your password on your registered email." : "";
 
-                       
+
                     }
                     else
                     {
@@ -185,5 +187,255 @@ namespace FuelDashApp.Business.BusinessServices.Service
             { }
             return list;
         }
-    }
+        public bool GetUserByEmail(string email)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                if ((!string.IsNullOrEmpty(email)))
+                {
+                    SqlParameter paramEmail = new SqlParameter("email", email);
+                    DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetUserByEmail", new SqlParameter[] { paramEmail });
+
+                    if (dtUser != null && dtUser.Rows.Count > 0)
+                    {
+
+                        response.IsSuccess = true;
+                        response.Message = "Email exist.";
+
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Email not exist.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Email not exist.";
+            }
+            return response.IsSuccess;
+        }
+        public List<DepartmentDTO> GetDepartments()
+        {
+            List<DepartmentDTO> list = new List<DepartmentDTO>();
+            try
+            {
+
+                DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetDepartments");
+                if (dtUser != null && dtUser.Rows.Count > 0)
+                {
+                    int i = 0;
+                    foreach (DataRow row in dtUser.Rows)
+                    {
+                        // if (dtUser != null && dtUser.Rows.Count > 0)
+                        // {
+                        DepartmentDTO item = new DepartmentDTO();
+
+                        item.DepartmentID = Convert.ToInt32(dtUser.Rows[i]["DepartmentID"].ToString());
+                        item.Company = dtUser.Rows[i]["Company"].ToString();
+                        item.Manager = dtUser.Rows[i]["Manager"].ToString();
+                        item.Rate1 = dtUser.Rows[i]["Rate1"].ToString();
+                        item.DefaultRate = dtUser.Rows[i]["DefaultRate"].ToString();
+                        item.Name = dtUser.Rows[i]["Name"].ToString();
+                        item.CreationDate = Convert.ToDateTime(dtUser.Rows[i]["CreationDate"].ToString());
+                        item.ModifiedDate = Convert.ToDateTime(dtUser.Rows[i]["ModifiedDate"].ToString());
+                        item.Creator = dtUser.Rows[i]["Creator"].ToString();
+                        item.UniqueID = dtUser.Rows[i]["UniqueID"].ToString();
+                        list.Add(item);
+                        i++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            { }
+            return list;
+        }
+        public List<JobSiteDTO> GetSites()
+        {
+            List<JobSiteDTO> list = new List<JobSiteDTO>();
+            try
+            {
+
+                DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetSite");
+                if (dtUser != null && dtUser.Rows.Count > 0)
+                {
+                    int i = 0;
+                    foreach (DataRow row in dtUser.Rows)
+                    {
+                        // if (dtUser != null && dtUser.Rows.Count > 0)
+                        // {
+                        JobSiteDTO item = new JobSiteDTO();
+                        item.Address = dtUser.Rows[i]["Address"].ToString();//
+                        item.Coaxial = dtUser.Rows[i]["Coaxial"].ToString();//
+                        item.CreationDate = dtUser.Rows[i]["CreationDate"].ToString();
+                        item.Customer = dtUser.Rows[i]["Customer"].ToString();//
+                        item.DeviceRegistration = dtUser.Rows[i]["DeviceRegistration"].ToString();//
+                        item.Dispensers = dtUser.Rows[i]["Dispensers"].ToString();//
+                        item.FacilityName = dtUser.Rows[i]["FacilityName"].ToString();//
+                        item.MarketingManager = dtUser.Rows[i]["MarketingManager"].ToString();//
+                        item.MeterCount = dtUser.Rows[i]["MeterCount"].ToString();//
+                        item.ModifiedDate = dtUser.Rows[i]["ModifiedDate"].ToString();
+                        item.PhoneNumber = dtUser.Rows[i]["PhoneNumber"].ToString();//
+                        item.PicturesFiles = dtUser.Rows[i]["Pictures/Files"].ToString();//
+                        item.RSM = dtUser.Rows[i]["RSM"].ToString();//
+                        item.SiteEmail = dtUser.Rows[i]["SiteEmail"].ToString();//
+                        item.StateID = dtUser.Rows[i]["StateID"].ToString();
+                        item.Tanks = dtUser.Rows[i]["Tanks"].ToString();
+                        item.UniqueID = dtUser.Rows[i]["UniqueID"].ToString();
+                        item.WeightsAndMeasuresCertificateNumber = dtUser.Rows[i]["WeightsAndMeasuresCertificateNumber"].ToString();
+                        item.WMCertificateImage = dtUser.Rows[i]["WMCertificateImage"].ToString();
+                        list.Add(item);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            { }
+            return list;
+        }
+
+        public JobSiteDTO GetSitesBySiteID(int siteID)
+        {
+            JobSiteDTO item = new JobSiteDTO();
+            try
+            {
+                SqlParameter param = new SqlParameter("SiteID", siteID);
+                DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetSiteBySiteID", new SqlParameter[] { param });
+                if (dtUser != null && dtUser.Rows.Count > 0)
+                {
+
+
+                    item.Address = dtUser.Rows[0]["Address"].ToString();//
+                    item.Coaxial = dtUser.Rows[0]["Coaxial"].ToString();//
+                    item.CreationDate = dtUser.Rows[0]["CreationDate"].ToString();
+                    item.Customer = dtUser.Rows[0]["Customer"].ToString();//
+                    item.DeviceRegistration = dtUser.Rows[0]["DeviceRegistration"].ToString();//
+                    item.Dispensers = dtUser.Rows[0]["Dispensers"].ToString();//
+                    item.FacilityName = dtUser.Rows[0]["FacilityName"].ToString();//
+                    item.MarketingManager = dtUser.Rows[0]["MarketingManager"].ToString();//
+                    item.MeterCount = dtUser.Rows[0]["MeterCount"].ToString();//
+                    item.ModifiedDate = dtUser.Rows[0]["ModifiedDate"].ToString();
+                    item.PhoneNumber = dtUser.Rows[0]["PhoneNumber"].ToString();//
+                    item.PicturesFiles = dtUser.Rows[0]["Pictures/Files"].ToString();//
+                    item.RSM = dtUser.Rows[0]["RSM"].ToString();//
+                    item.SiteEmail = dtUser.Rows[0]["SiteEmail"].ToString();//
+                    item.StateID = dtUser.Rows[0]["StateID"].ToString();
+                    item.Tanks = dtUser.Rows[0]["Tanks"].ToString();
+                    item.UniqueID = dtUser.Rows[0]["UniqueID"].ToString();
+                    item.WeightsAndMeasuresCertificateNumber = dtUser.Rows[0]["WeightsAndMeasuresCertificateNumber"].ToString();
+                    item.WMCertificateImage = dtUser.Rows[0]["WMCertificateImage"].ToString();
+
+                }
+
+
+            }
+            catch (Exception ex)
+            { }
+            return item;
+        }
+        public int InsertPasscode(PasscodeDTO data)
+        {
+            int passCodeId = 0;
+            SqlParameter[] sqlParams = new SqlParameter[4];
+            sqlParams[0] = new SqlParameter("SenderID", data.SenderID);
+            sqlParams[1] = new SqlParameter("RecipientEmail", data.RecipientEmail);
+            sqlParams[2] = new SqlParameter("PassCode", data.PassCode);
+            sqlParams[3] = new SqlParameter("IsSignedUp", data.IsSignedUp);
+            object objResult = SqlClientRMXProd.ExecuteScalar("udsp_InsertPasscodeInfo", sqlParams);
+            if ((objResult != null) && (Int32.TryParse(objResult.ToString(), out passCodeId)))
+            {
+                return passCodeId;
+            }
+            return passCodeId;
+        }
+
+        public void UpdatePasscode(PasscodeDTO data)
+        {
+
+            SqlParameter[] sqlParams = new SqlParameter[2];
+            sqlParams[0] = new SqlParameter("RecipientEmail", data.RecipientEmail);
+            sqlParams[1] = new SqlParameter("IsSignedUp", data.IsSignedUp);
+            object objResult = SqlClientRMXProd.ExecuteScalar("udsp_UpdatePasscodeInfo", sqlParams);
+
+        }
+        public PasscodeDTO GetPasscode()
+        {
+            PasscodeDTO list = new PasscodeDTO();
+            try
+            {
+
+
+                DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetPassCode");
+                if (dtUser != null && dtUser.Rows.Count > 0)
+                {
+                    list.PasscodeID = Convert.ToInt32(dtUser.Rows[0]["PasscodeID"].ToString());
+                    list.PassCode = dtUser.Rows[0]["PassCode"].ToString();
+                    list.RecipientEmail = dtUser.Rows[0]["RecipientEmail"].ToString();
+                    list.SenderID = dtUser.Rows[0]["SenderID"].ToString();
+                    list.IsSignedUp = Convert.ToBoolean(dtUser.Rows[0]["IsSignedUp"].ToString());
+                }
+            }
+            catch (Exception ex)
+            { }
+            return list;
+        }
+        public List<PriorityDTO> GetPriority()
+        {
+            List<PriorityDTO> item = new List<PriorityDTO>();
+            try
+            {
+
+
+                DataTable dtUser = SqlClientRMXProd.ExecuteDataTable("udsp_GetPriority");
+                if (dtUser != null && dtUser.Rows.Count > 0)
+                {
+                    int i = 0;
+                    foreach (DataRow row in dtUser.Rows)
+                    {
+                        // if (dtUser != null && dtUser.Rows.Count > 0)
+                        // {
+                        PriorityDTO list = new PriorityDTO();
+                        list.CreatedDate = Convert.ToDateTime(dtUser.Rows[0]["CreatedDate"].ToString());
+                        list.Creator = dtUser.Rows[0]["Creator"].ToString();
+                        list.Description = dtUser.Rows[0]["Description"].ToString();
+                        list.Level = dtUser.Rows[0]["Level"].ToString();
+                        list.ModifiedDate = Convert.ToDateTime(dtUser.Rows[0]["ModifiedDate"].ToString());
+                        list.Name = dtUser.Rows[0]["Name"].ToString();
+                        list.NumberOfHoursDeadline = Convert.ToDecimal(dtUser.Rows[0]["NumberOfHoursDeadline"].ToString());
+                        list.PriorityID = Convert.ToInt32(dtUser.Rows[0]["PriorityID"].ToString());
+                        item.Add(list);
+                    }
+                }
+            }
+            catch (Exception ex)
+            { }
+            return item;
+        }
+
+        public int InsertWorkOrder(WorkOrderDTO data)
+        {
+            int workOrderId = 0;
+            SqlParameter[] sqlParams = new SqlParameter[11];
+            sqlParams[0] = new SqlParameter("CompletedDate", data.CompletedDate);
+            sqlParams[1] = new SqlParameter("ContractorID", data.ContractorID);
+            sqlParams[2] = new SqlParameter("DeadLineDate", data.DeadLineDate);
+            sqlParams[3] = new SqlParameter("DepartmentID", data.DepartmentID);
+            sqlParams[4] = new SqlParameter("DispatchedDate", data.DispatchedDate);
+            sqlParams[5] = new SqlParameter("DispatchTo", data.DispatchTo);
+            sqlParams[6] = new SqlParameter("PriorityID", data.PriorityID);
+            sqlParams[7] = new SqlParameter("ProblemDescription", data.ProblemDescription);
+            sqlParams[8] = new SqlParameter("ReceivedDate", data.ReceivedDate);
+            sqlParams[9] = new SqlParameter("SiteID", data.SiteID);
+            sqlParams[10] = new SqlParameter("WorkOrderStatus", ActivityStatusEnum.Unscheduled);
+            object objResult = SqlClientRMXProd.ExecuteScalar("udsp_InsertWorkOrder", sqlParams);
+            if ((objResult != null) && (Int32.TryParse(objResult.ToString(), out workOrderId)))
+            {
+                return workOrderId;
+            }
+            return workOrderId;
+        }
+        }
 }

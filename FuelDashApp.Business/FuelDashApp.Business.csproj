@@ -113,8 +113,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessDTO\ActivityStatusEnum.cs" />
+    <Compile Include="BusinessDTO\DepartmentDTO.cs" />
+    <Compile Include="BusinessDTO\JobSiteDTO.cs" />
+    <Compile Include="BusinessDTO\PasscodeDTO.cs" />
+    <Compile Include="BusinessDTO\PriorityDTO.cs" />
     <Compile Include="BusinessDTO\RoleDTO.cs" />
     <Compile Include="BusinessDTO\User.cs" />
+    <Compile Include="BusinessDTO\WorkOrderDTO.cs" />
     <Compile Include="Sql\AutomatedEmailSettings.cs" />
     <Compile Include="BusinessDTO\LoginDTO.cs" />
     <Compile Include="BusinessDTO\ResponseDTO.cs" />
