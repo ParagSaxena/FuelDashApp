@@ -21,6 +21,13 @@ namespace FuelDashApp.Views
 
         public CreateActivityPageViewModel ViewModel => this.BindingContext as CreateActivityPageViewModel;
 
+        protected override void OnAppearing()
+        {
+            ViewModel.GetDepartmentsAsync();
+            ViewModel.GetPrioritiesAsync();
+            base.OnAppearing();
+        }
+
         private void FormatEmail_Clicked(object sender, EventArgs e)
         {
             ViewModel.ParseEamil(EmailTextEditor.Text);
