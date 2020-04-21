@@ -339,10 +339,11 @@ namespace FuelDashApp.Business.BusinessServices.Service
         public int InsertPasscode(PasscodeDTO data)
         {
             int passCodeId = 0;
+          //  string passcode = System.Web.Security.Membership.GeneratePassword(6, 2);
             SqlParameter[] sqlParams = new SqlParameter[4];
             sqlParams[0] = new SqlParameter("SenderID", data.SenderID);
             sqlParams[1] = new SqlParameter("RecipientEmail", data.RecipientEmail);
-            sqlParams[2] = new SqlParameter("PassCode", data.PassCode);
+            sqlParams[2] = new SqlParameter("PassCode",data.PassCode);
             sqlParams[3] = new SqlParameter("IsSignedUp", data.IsSignedUp);
             object objResult = SqlClientRMXProd.ExecuteScalar("udsp_InsertPasscodeInfo", sqlParams);
             if ((objResult != null) && (Int32.TryParse(objResult.ToString(), out passCodeId)))

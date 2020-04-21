@@ -23,12 +23,12 @@ namespace FuelDashApp.Views
         private IMedia _mediaPicker;
         ImageSource image { get; set; }
         public SignupPageViewModel _vm; 
-        public EditProfilePage (string name, string email)
+        public EditProfilePage ()
 		{
             try
             {
                 InitializeComponent();
-                _vm = new SignupPageViewModel(name, email);
+                _vm = new SignupPageViewModel();
                 this.BindingContext = _vm;
             }
             catch(Exception ex)

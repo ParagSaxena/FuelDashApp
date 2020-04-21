@@ -16,60 +16,67 @@ namespace FuelDashApp.Views
    // [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SignupPage : ContentPage
     {
-       
+
+        public SignupPageViewModel _vm;
         public SignupPage()
         {
             InitializeComponent();
-            
+            _vm = new SignupPageViewModel();
+            this.BindingContext = _vm;
         }
 
         protected override void OnAppearing()
         {
-            //var security = "";
-            //var ssidHidden = "";
-
-            //   ssidHidden = "H:false";
-
-            //BarcodeImageView.BarcodeValue = $"WIFI:S:{"Rachna"};T:{security};P:{"Mishra.rachna.90@gmail.com"};{ssidHidden};";
-
-            //BarcodeImageView.IsVisible = true;
-            // _vm.GetRolesAsync();
+           // _vm.GetRolesAsync();
             base.OnAppearing();
         }
 
-        public async void Handle_OnScanResult(Result result)
+        private async void CancelImageOfPopUpTapped(object sender, EventArgs e)
         {
-            string name = "";  string email = "";
-            Device.BeginInvokeOnMainThread(async () =>
+            App.IsPopupButtonEnable = true;
+            await Navigation.PopAsync();
+        }
+
+
+        public async void Login_Tapped(object sender, EventArgs e)
+        {
+            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(LoginPage))
             {
-               // await Navigation.PopAsync();
-                if (!String.IsNullOrEmpty(email))
+                await Navigation.PopAsync();
+                await Navigation.PushAsync(new LoginPage());
+            }
+        }
+
+        private async void SignupButton_Clicked(object sender, EventArgs e)
+        {
+
+            var Toast = DependencyService.Get<IMessage>();
+            await _vm.RegisterAsync();
+            if (_vm.IsValid)
+            {
+                App.IsUserLoggedIn = true;
+                Toast.LongAlert(_vm.Message);
+                if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(HomePage))
                 {
-                    await Navigation.PushAsync(new EditProfilePage(name, email));
+                    await Navigation.PushAsync(new HomePage());
                 }
-            });
-            try
-            {
-                if (string.IsNullOrWhiteSpace(result.Text))
-                    return;
-                if (!result.Text.ToUpperInvariant().StartsWith("WIFI:", StringComparison.Ordinal))
-                    return;
-                var text = result.Text.Split(';');
-                 name = text[0].Replace("WIFI:S:", "");
-                 email = text[2].Replace("P:", "");
-                //if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(EditProfilePage))
-                //{
-                //    await Navigation.PushAsync(new EditProfilePage(name, email));
-                //}
-               
             }
-            catch(Exception ex)
-            {
 
-            }
         }
 
 
 
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
         }
+
+
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+        }
+
+    }
 }

@@ -20,7 +20,7 @@ namespace FuelDashApp.ViewModels
             set
             {
                 _message = value;
-                OnPropertChanged(nameof(Message));
+                OnPropertyChanged(nameof(Message));
             }
         }
         private bool _isMailExist;
@@ -30,7 +30,7 @@ namespace FuelDashApp.ViewModels
             set
             {
                 _isMailExist = value;
-                OnPropertChanged(nameof(IsMailExist));
+                OnPropertyChanged(nameof(IsMailExist));
             }
         }
         private bool _isValid { get; set; }
@@ -44,7 +44,7 @@ namespace FuelDashApp.ViewModels
             set
             {
                 _isValid = value;
-                OnPropertChanged(nameof(IsValid));
+                OnPropertyChanged(nameof(IsValid));
             }
         }
         private string _firstName;
@@ -59,7 +59,23 @@ namespace FuelDashApp.ViewModels
                 if (_firstName != value)
                 {
                     _firstName = value;
-                    OnPropertChanged(nameof(FirstName));
+                    OnPropertyChanged(nameof(FirstName));
+                }
+            }
+        }
+        private PasscodeModel _passcode;
+        public PasscodeModel PassCodeData
+        {
+            get
+            {
+                return _passcode;
+            }
+            set
+            {
+                if (_passcode != value)
+                {
+                    _passcode = value;
+                    OnPropertyChanged(nameof(PassCodeData));
                 }
             }
         }
@@ -76,7 +92,7 @@ namespace FuelDashApp.ViewModels
                 if (_lastName != value)
                 {
                     _lastName = value;
-                    OnPropertChanged(nameof(LastName));
+                    OnPropertyChanged(nameof(LastName));
                 }
             }
         }
@@ -92,7 +108,23 @@ namespace FuelDashApp.ViewModels
                 if (_email != value)
                 {
                     _email = value;
-                    OnPropertChanged(nameof(Email));
+                    OnPropertyChanged(nameof(Email));
+                }
+            }
+        }
+        private string _passCode;
+        public string Passcode
+        {
+            get
+            {
+                return _passCode;
+            }
+            set
+            {
+                if (_passCode != value)
+                {
+                    _passCode = value;
+                    OnPropertyChanged(nameof(Passcode));
                 }
             }
         }
@@ -108,7 +140,7 @@ namespace FuelDashApp.ViewModels
                 if (_password != value)
                 {
                     _password = value;
-                    OnPropertChanged(nameof(Password));
+                    OnPropertyChanged(nameof(Password));
                 }
             }
         }
@@ -124,67 +156,28 @@ namespace FuelDashApp.ViewModels
                 if (_confirmPassword != value)
                 {
                     _confirmPassword = value;
-                    OnPropertChanged(nameof(ConfirmPassword));
+                    OnPropertyChanged(nameof(ConfirmPassword));
                 }
             }
         }
 
-        private List<Role> _roles;
-        public List<Role> Roles
+
+        public SignupPageViewModel()
         {
-            get
-            {
-                return _roles;
-            }
-            set
-            {
-                if (_roles != value)
-                {
-                    _roles = value;
-                    OnPropertChanged(nameof(Roles));
-                }
-            }
         }
 
-        private Role _selectedRole;
-        public Role SelectedRole
-        {
-            get
-            {
-                return _selectedRole;
-            }
-            set
-            {
-                if (_selectedRole != value)
-                {
-                    _selectedRole = value;
-                    OnPropertChanged(nameof(SelectedRole));
-                }
-            }
-        }
-
-        public SignupPageViewModel(string name , string email)
-        {
-            FirstName = name;
-            Email = email;
-        }
-        public async Task GetRolesAsync()
-        {
-            if (OperationInProgress)
-            {
-                return;
-            }
-            OperationInProgress = true;
-         // Roles = await new APIData().GetListData<Role>("User/GetRole", false);
-
-            Roles = await RolesProvider.GetRolesAsync();
-            SelectedRole = Roles?.FirstOrDefault();
-            OperationInProgress = false;
-        }
         public async Task IsEmailExsitAsync()
         {
-            ///IsMailExist = false;
-            IsMailExist = await new APIData().GetData<bool>("User/GetUserByEmail?email="+Email, false);
+            IsMailExist = false;
+            var data = await new APIData().GetData<UserModel>("User/GetUserByEmail?email=" + Email, false);
+            if (data != null)
+            {
+                IsMailExist = true;
+            }
+        }
+        public async Task IsCorrectPassCodeAsync()
+        {
+            PassCodeData = await new APIData().GetData<PasscodeModel>("User/GetPasscode?email=" + Email, false);
 
         }
 
@@ -197,20 +190,24 @@ namespace FuelDashApp.ViewModels
             ValidateForm();
             if (IsValid)
             {
-               
+
                 OperationInProgress = true;
                 UserModel _user = new UserModel();
                 _user.FirstName = FirstName;
                 _user.LastName = LastName;
-                _user.RoleID = SelectedRole.RoleId;
+                _user.RoleID = PassCodeData.RoleId;
                 _user.Email = Email;
                 _user.Password = Password;
-                var result = await new APIData().PostData<int>("User/Registration",_user, false);
+                var result = await new APIData().PostData<int>("User/Registration", _user, false);
 
                 //var result = await SignupProvider.SignupAsync(_user);
                 //            var result =await SignupProvider.SignupAsync(FirstName, LastName, SelectedRole.RoleId, Email, Password, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
-                if (result>0)
+                if (result > 0)
                 {
+                    PasscodeModel data = new PasscodeModel();
+                    data.RecipientEmail = Email;
+                    data.IsSignedUp = true;
+                    await new APIData().PostData<int>("User/UpdatePasscode", data, false);
                     Message = "Welcome to Fuel Dash.";
                     App.UserId = result;
                 }
@@ -225,9 +222,9 @@ namespace FuelDashApp.ViewModels
         {
             IsValid = true;
             var Toast = DependencyService.Get<IMessage>();
-            if (SelectedRole==null ||SelectedRole.RoleId<=0)
+            if (String.IsNullOrEmpty(Passcode))
             {
-                Toast.LongAlert("Role is required."); IsValid = false; return;
+                Toast.LongAlert("Passcode is required."); IsValid = false; return;
             }
             if (String.IsNullOrEmpty(FirstName))
             {
@@ -241,6 +238,12 @@ namespace FuelDashApp.ViewModels
             {
                 Toast.LongAlert("Email is required."); IsValid = false; return;
             }
+            if (!Regex.IsMatch(Email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
+            {
+                Toast.LongAlert("Invalid email address."); IsValid = false; return;
+            }
+
+
             await IsEmailExsitAsync();
             if (IsMailExist)
             {
@@ -261,6 +264,15 @@ namespace FuelDashApp.ViewModels
             if (Password != ConfirmPassword)
             {
                 Toast.LongAlert("Confirm password is not matched."); IsValid = false; return;
+            }
+            await IsCorrectPassCodeAsync();
+            if (PassCodeData.PassCode != Passcode && !PassCodeData.IsSignedUp)
+            {
+                Toast.LongAlert("Passcode is not matched.Please enter correct passcode."); IsValid = false; return;
+            }
+            if (PassCodeData.IsSignedUp)
+            {
+                Toast.LongAlert("You already have FuelDash account. Please use Login or Forgot password option of app."); IsValid = false; return;
             }
         }
     }

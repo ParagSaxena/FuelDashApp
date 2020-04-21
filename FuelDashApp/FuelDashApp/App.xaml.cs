@@ -10,6 +10,7 @@ namespace FuelDashApp
     {
         public static bool IsPopupButtonEnable { get; set; }
         public static bool IsUserLoggedIn { get; set; }
+        public static string UserEmail { get; set; }
         public static int UserId { get; set; }
         public static double ScreenHeight { get; set; }
         public static double ScreenWidth { get; set; }

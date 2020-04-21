@@ -20,14 +20,14 @@ namespace FuelDashApp.ViewModels
                 if (_operationInProgress != value)
                 {
                     _operationInProgress = value;
-                    OnPropertChanged(nameof(OperationInProgress));
+                    OnPropertyChanged(nameof(OperationInProgress));
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertChanged(string propertyName = null)
+        public void OnPropertyChanged(string propertyName = null)
         {
             if (PropertyChanged != null)
             {

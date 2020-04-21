@@ -15,7 +15,7 @@ using FuelDashApp.Views.CustomControls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(ImageCircle), typeof(CircleImageRenderer))]
+[assembly: ExportRenderer(typeof(FuelDashApp.Views.CustomControls.ImageCircle), typeof(CircleImageRenderer))]
 namespace FuelDashApp.Droid.CustomRenderers
 {
     public class CircleImageRenderer : ImageRenderer

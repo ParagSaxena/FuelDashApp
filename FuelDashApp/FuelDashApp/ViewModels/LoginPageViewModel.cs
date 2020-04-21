@@ -1,4 +1,5 @@
-﻿using FuelDashApp.Providers;
+﻿using FuelDashApp.Models;
+using FuelDashApp.Providers;
 using FuelDashApp.Services;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace FuelDashApp.ViewModels
             set
             {
                 _isValid = value;
-                OnPropertChanged(nameof(IsValid));
+                OnPropertyChanged(nameof(IsValid));
             }
         }
         private string _email;
@@ -34,7 +35,7 @@ namespace FuelDashApp.ViewModels
                 if (_email != value)
                 {
                     _email = value;
-                    OnPropertChanged(nameof(Email));
+                    OnPropertyChanged(nameof(Email));
                 }
             }
         }
@@ -50,7 +51,7 @@ namespace FuelDashApp.ViewModels
                 if (_password != value)
                 {
                     _password = value;
-                    OnPropertChanged(nameof(Password));
+                    OnPropertyChanged(nameof(Password));
                 }
             }
         }
@@ -68,7 +69,12 @@ namespace FuelDashApp.ViewModels
                 var result = await LoginProvider.LoginAsync(Email, Password);
                 if (result)
                 {
-
+                  var  userdata = await new APIData().GetData<UserModel>("User/GetUserByEmail?email=" + Email, false);
+                    if(userdata!=null)
+                    {
+                        App.UserEmail = Email;
+                        App.UserId = userdata.UserId;
+                    }
                 }
                 else
                 {

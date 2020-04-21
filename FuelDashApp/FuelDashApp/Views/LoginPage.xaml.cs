@@ -48,10 +48,10 @@ namespace FuelDashApp.Views
             await ViewModel.LoginAsync();
             if (ViewModel.IsValid)
             {
-               // if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(HomePage))
-                //{
-                    //await Navigation.PushAsync(new HomePage());
-               // }
+                if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(HomePage))
+                {
+                    await Navigation.PushAsync(new HomePage());
+                }
             }
         }
 

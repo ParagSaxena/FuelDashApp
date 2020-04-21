@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -51,9 +52,9 @@ namespace FuelDashApp.iOS.CustomRenderer
             }
         }
 
-        //public string GetPath()
-       // {
-       //     return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
-      //  }
+        public string GetPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+        }
     }
 }

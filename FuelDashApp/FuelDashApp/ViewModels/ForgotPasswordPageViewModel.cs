@@ -21,7 +21,7 @@ namespace FuelDashApp.ViewModels
                 if (_email != value)
                 {
                     _email = value;
-                    OnPropertChanged(nameof(Email));
+                    OnPropertyChanged(nameof(Email));
                 }
             }
         }

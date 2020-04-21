@@ -4,15 +4,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-
 using Foundation;
 using FuelDashApp.iOS.CustomRenderer;
-using FuelDashApp.Views.CustomControls;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(ImageCircle), typeof(ImageCircleRender))]
+[assembly: ExportRenderer(typeof(FuelDashApp.Views.CustomControls.ImageCircle), typeof(ImageCircleRender))]
 
 namespace FuelDashApp.iOS.CustomRenderer
 {

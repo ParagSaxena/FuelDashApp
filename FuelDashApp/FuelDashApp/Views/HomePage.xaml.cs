@@ -58,9 +58,13 @@ namespace FuelDashApp.Views
 
         }
 
-        private void Add_Tapped(object sender, EventArgs e)
+        private async void Add_Tapped(object sender, EventArgs e)
         {
-
+            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(LoginPage))
+            {
+                // await Navigation.PushAsync(new HomePage());
+                await Navigation.PushAsync(new GenerateQRPage());
+            }
         }
 
         private void MenuItemListView_ItemTapped(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
