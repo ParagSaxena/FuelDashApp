@@ -3,6 +3,7 @@ using FuelDashApp.Providers;
 using FuelDashApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -63,8 +64,8 @@ namespace FuelDashApp.ViewModels
                 }
             }
         }
-        private PasscodeModel _passcode;
-        public PasscodeModel PassCodeData
+        private List<PasscodeModel> _passcode;
+        public List<PasscodeModel> PassCodeData
         {
             get
             {
@@ -169,15 +170,15 @@ namespace FuelDashApp.ViewModels
         public async Task IsEmailExsitAsync()
         {
             IsMailExist = false;
-            var data = await new APIData().GetData<UserModel>("User/GetUserByEmail?email=" + Email, false);
-            if (data != null)
+            var data = await new APIData().GetData<DataTable>("User/GetUserByEmail?email=" + Email, false);
+            if (data != null && data.DataSet!=null)
             {
                 IsMailExist = true;
             }
         }
         public async Task IsCorrectPassCodeAsync()
         {
-            PassCodeData = await new APIData().GetData<PasscodeModel>("User/GetPasscode?email=" + Email, false);
+            PassCodeData = await new APIData().GetListData<PasscodeModel>("User/GetPasscode?email=" + Email, false);
 
         }
 
@@ -187,7 +188,7 @@ namespace FuelDashApp.ViewModels
             {
                 return;
             }
-            ValidateForm();
+          //  ValidateForm();
             if (IsValid)
             {
 
@@ -195,7 +196,7 @@ namespace FuelDashApp.ViewModels
                 UserModel _user = new UserModel();
                 _user.FirstName = FirstName;
                 _user.LastName = LastName;
-                _user.RoleID = PassCodeData.RoleId;
+               // _user.RoleID = PassCodeData.RoleId;
                 _user.Email = Email;
                 _user.Password = Password;
                 var result = await new APIData().PostData<int>("User/Registration", _user, false);
@@ -218,62 +219,6 @@ namespace FuelDashApp.ViewModels
                 OperationInProgress = false;
             }
         }
-        private async void ValidateForm()
-        {
-            IsValid = true;
-            var Toast = DependencyService.Get<IMessage>();
-            if (String.IsNullOrEmpty(Passcode))
-            {
-                Toast.LongAlert("Passcode is required."); IsValid = false; return;
-            }
-            if (String.IsNullOrEmpty(FirstName))
-            {
-                Toast.LongAlert("First name is required."); IsValid = false; return;
-            }
-            if (String.IsNullOrEmpty(LastName))
-            {
-                Toast.LongAlert("Last name is required."); IsValid = false; return;
-            }
-            if (String.IsNullOrEmpty(Email))
-            {
-                Toast.LongAlert("Email is required."); IsValid = false; return;
-            }
-            if (!Regex.IsMatch(Email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
-            {
-                Toast.LongAlert("Invalid email address."); IsValid = false; return;
-            }
 
-
-            await IsEmailExsitAsync();
-            if (IsMailExist)
-            {
-                Toast.LongAlert("Email already exist."); IsValid = false; return;
-            }
-            if (!Regex.IsMatch(Email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
-            {
-                Toast.LongAlert("Invalid email address."); IsValid = false; return;
-            }
-            if (String.IsNullOrEmpty(Password))
-            {
-                Toast.LongAlert("Password is required."); IsValid = false; return;
-            }
-            if (String.IsNullOrEmpty(ConfirmPassword))
-            {
-                Toast.LongAlert("Confirm password is required."); IsValid = false; return;
-            }
-            if (Password != ConfirmPassword)
-            {
-                Toast.LongAlert("Confirm password is not matched."); IsValid = false; return;
-            }
-            await IsCorrectPassCodeAsync();
-            if (PassCodeData.PassCode != Passcode && !PassCodeData.IsSignedUp)
-            {
-                Toast.LongAlert("Passcode is not matched.Please enter correct passcode."); IsValid = false; return;
-            }
-            if (PassCodeData.IsSignedUp)
-            {
-                Toast.LongAlert("You already have FuelDash account. Please use Login or Forgot password option of app."); IsValid = false; return;
-            }
-        }
     }
 }

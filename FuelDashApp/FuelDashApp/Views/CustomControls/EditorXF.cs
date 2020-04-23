@@ -1,6 +1,9 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Xamarin.Forms;
 
-namespace FuelDashApp.Droid.CustomRenderers
+namespace FuelDashApp.Views.CustomControls
 {
     public class EditorXF : Editor
     {

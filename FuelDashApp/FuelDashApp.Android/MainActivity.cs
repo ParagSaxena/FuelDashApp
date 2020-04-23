@@ -20,9 +20,9 @@ namespace FuelDashApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             App.ScreenWidth = (double)Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density;
             App.ScreenHeight = (double)Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density;
-            ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
             DependencyService.Register<MessageAndroid>();
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

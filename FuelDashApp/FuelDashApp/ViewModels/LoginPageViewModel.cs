@@ -3,6 +3,7 @@ using FuelDashApp.Providers;
 using FuelDashApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -55,6 +56,22 @@ namespace FuelDashApp.ViewModels
                 }
             }
         }
+        private bool _isPopupButtonEnable;
+        public bool IsPopupButtonEnable
+        {
+            get { return _isPopupButtonEnable; }
+            set
+            {
+                _isPopupButtonEnable = value;
+                OnPropertyChanged();
+            }
+        }
+        public LoginPageViewModel()
+        {
+            App.IsPopupButtonEnable = true;
+            IsPopupButtonEnable = App.IsPopupButtonEnable;
+
+        }
 
         public async Task LoginAsync()
         {
@@ -66,19 +83,23 @@ namespace FuelDashApp.ViewModels
             ValidateForm();
             if (IsValid)
             {
-                var result = await LoginProvider.LoginAsync(Email, Password);
+                LoginRequest loginData = new LoginRequest();
+                loginData.Email = Email;
+                loginData.Password = Password;
+                var result = await new APIData().GetData<bool>("User/UserLogin?email="+Email+"&&password="+Password, true);
+              //  var result = await LoginProvider.LoginAsync(Email, Password);
                 if (result)
                 {
-                  var  userdata = await new APIData().GetData<UserModel>("User/GetUserByEmail?email=" + Email, false);
-                    if(userdata!=null)
+                  var  userdata = await new APIData().GetData<DataTable>("User/GetUserByEmail?email=" + Email, false);
+                    if(userdata!=null && userdata.DataSet!=null)
                     {
                         App.UserEmail = Email;
-                        App.UserId = userdata.UserId;
+                        App.UserId =Convert.ToInt32(userdata.Rows[0]["UserID"].ToString());
                     }
                 }
                 else
                 {
-
+                    IsValid = false;
                 }
             }
             OperationInProgress = false;

@@ -11,7 +11,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using FuelDashApp.Droid.CustomRenderers;
-using FuelDashApp.Views.CustomControls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 

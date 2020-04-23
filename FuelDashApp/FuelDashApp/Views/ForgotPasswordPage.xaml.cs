@@ -1,6 +1,7 @@
 ﻿using FuelDashApp.Models;
 using FuelDashApp.Services;
 using FuelDashApp.ViewModels;
+using Rg.Plugins.Popup.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ using Xamarin.Forms.Xaml;
 namespace FuelDashApp.Views
 {
 	//[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ForgotPasswordPage : ContentPage
-	{
+	public partial class ForgotPasswordPage : PopupPage
+    {
 		public ForgotPasswordPage ()
 		{
 			InitializeComponent ();
@@ -33,6 +34,7 @@ namespace FuelDashApp.Views
 
         private async void ForgotPassword_Clicked(object sender, EventArgs e)
         {
+            App.IsPopupButtonEnable = true;
             BaseResponse response=await ViewModel.ForgotPasswordAsync();
             var Toast = DependencyService.Get<IMessage>();
             Toast.LongAlert(response.Message); 
@@ -40,6 +42,7 @@ namespace FuelDashApp.Views
 
         private async void CancelImageOfPopUpTapped(object sender, EventArgs e)
         {
+            App.IsPopupButtonEnable = true;
             await Navigation.PopAsync();
         }
     }

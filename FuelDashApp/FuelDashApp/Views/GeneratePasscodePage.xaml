@@ -3,111 +3,179 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:cc="clr-namespace:FuelDashApp.Views.CustomControls"
              NavigationPage.HasNavigationBar="False"
-              xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
-             xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
              x:Class="FuelDashApp.Views.GenerateQRPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="backgroundColor">#AF1E2D</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+        <Grid RowSpacing="0" VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
+            <Grid x:Name="mainGrid" RowSpacing="0" Padding="0" Grid.Row="0" >
+                <Grid.Margin>
+                    <OnPlatform x:TypeArguments="Thickness" iOS="0,17,0,0" Android="0,0,0,0"/>
+                </Grid.Margin>
+                <Grid.RowDefinitions >
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnIdiom x:TypeArguments="GridLength" Tablet="90" Phone="60"/>
+                        </RowDefinition.Height>
+                    </RowDefinition>
+                    <!--<RowDefinition Height="Auto" />-->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <Frame HorizontalOptions="FillAndExpand" Padding="0" Grid.Row="0" VerticalOptions="CenterAndExpand" BackgroundColor="White">
-                <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <Grid RowSpacing="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="6">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="7"/>
-                            <RowDefinition Height="300"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="45"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource ThemeRedColor}">
+                    <Grid HorizontalOptions="FillAndExpand" x:Name="toolBar" VerticalOptions="FillAndExpand" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="8"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="8"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="End"  HeightRequest="24" WidthRequest="24" VerticalOptions="Start" Padding="0" >
-                            <Image Source="close.png"  HorizontalOptions="Center"  VerticalOptions="Center"     HeightRequest="14" WidthRequest="14" Margin="1">
-                            </Image>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="CancelImageOfPopUpTapped"/>
-                            </Grid.GestureRecognizers>
-                        </Grid>
-                        <Label Grid.Column="1" Grid.Row="1" Text="Generate Pass Code" TextColor="{StaticResource CharcoalGrey}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" FontFamily="Lato-Regular.ttf#Lato-Regular" FontSize="16" />
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Image Margin="10,0,0,0" Grid.Column="0" Grid.Row="1" Source="back.png" x:Name="backImage" HorizontalOptions="Start" VerticalOptions="CenterAndExpand">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <StackLayout Grid.Column="1" Grid.Row="1"   HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                            <Label x:Name="lblGeneratePass"  Text="Generate Passcode" FontSize="Medium" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" TextColor="White"
+FontFamily="Lato-Medium.ttf#Lato-Medium" />
+                        </StackLayout>
+                    </Grid>
 
-
-                        <Frame Padding="5" HasShadow="False" Grid.Column="1"  Grid.Row="3" OutlineColor="#dedede"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5">
-                            <Grid ColumnSpacing="0" Padding="0">
+                </StackLayout>
+                <!--<StackLayout Grid.Row="1"  HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand" BackgroundColor="#a8b6c8">
+                            <Grid  x:Name="AvailabilityHeader">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="28"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="emailicon.png" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14" HeightRequest="11"></Image>
-                                <Image Source="user.png" BackgroundColor="White" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14"  HeightRequest="11"></Image>
-                                <Picker x:Name="Role" BackgroundColor="White"  ItemsSource="{Binding Roles}" ItemDisplayBinding="{Binding RoleName}" SelectedItem="{Binding SelectedRole,Mode=TwoWay}" TextColor="Black" HorizontalOptions="FillAndExpand" 
-                         VerticalOptions="CenterAndExpand" Grid.Column="1" FontSize="14" FontFamily="Lato-Regular.ttf#Lato-Regular">
-                                    <Picker.HeightRequest>
-                                        <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
-                                    </Picker.HeightRequest>
-                                </Picker>
+                                <StackLayout Grid.Row="1"  Grid.Column="0"  Margin="15,0,0,0" Orientation="Horizontal"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                                    <Label x:Name="lblSetUp" Margin="20,0,0,0"  Text="User Information" FontSize="{StaticResource LabelFontSize16}" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand" TextColor="{StaticResource CharcoalGrey}"
+FontFamily="Lato-Medium.ttf#Lato-Medium"/>
+
+                                </StackLayout>
 
                             </Grid>
-                        </Frame>
-                        
-                        <Frame Padding="5" HasShadow="False" Grid.Column="1"  Grid.Row="4" OutlineColor="#dedede"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5">
-                            <Grid ColumnSpacing="0" Padding="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="28"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Source="emailicon.png" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14" HeightRequest="11"></Image>
-                                <Entry  x:Name="Email" Text="{Binding Email,Mode=TwoWay}"  Placeholder="Email" PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"   Grid.Column="1" HorizontalTextAlignment="Start" FontFamily="Lato-Regular.ttf#Lato-Regular" FontSize="14">
-                                    <Entry.HeightRequest>
-                                        <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
-                                    </Entry.HeightRequest>
-                                </Entry>
+                        </StackLayout>-->
 
-                            </Grid>
-                        </Frame>
-                        <Frame Padding="5" Grid.Column="1" Grid.Row="5" HasShadow="False" OutlineColor="#dedede" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5" >
-                            <Grid ColumnSpacing="0" Padding="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="28"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Source="mail.png"  Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14" BackgroundColor="White"  HeightRequest="11"></Image>
-                                <Editor x:Name="Name" BackgroundColor="White" Text="{Binding Message,Mode=TwoWay}"  Placeholder="Recipient Name"  PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" FontSize="14" 
-                         VerticalOptions="CenterAndExpand" Grid.Column="1" FontFamily="Lato-Regular.ttf#Lato-Regular">
 
-                                </Editor>
-                            </Grid>
-                        </Frame>
-                        <cc:CustomButton x:Name="btnHome" Margin="0"  Grid.Column="1" Grid.Row="6" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Text="Generate QR Code"  TextColor="White" Clicked="Login_Clicked" CustomBorderColor="{StaticResource ThemeRedColor}"  FontSize="16"
-                                         CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5"  
-                                         FontFamily="Lato-Regular.ttf#Lato-Regular">
-                            <cc:CustomButton.HeightRequest>
-                                <OnPlatform x:TypeArguments="x:Double" iOS="30" Android="40"/>
-                            </cc:CustomButton.HeightRequest>
-                        </cc:CustomButton>
-                        <Grid Grid.Row="7" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="1" BackgroundColor="White">
+                    <StackLayout  BackgroundColor="White"  Padding="20"  VerticalOptions="FillAndExpand">
+                        <Grid RowSpacing="0" VerticalOptions="FillAndExpand">
                             <Grid.RowDefinitions>
+                                <!--<RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="7"/>
+                                    <RowDefinition Height="300"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="45"/>-->
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="4"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="45"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0" TextColor="{StaticResource ThemeRedColor}"  Text="We will send a passcode on recipient mail with this message."  HorizontalOptions="Center" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontFamily="Lato-Regular.ttf#Lato-Regular" FontSize="12">
-                                <Label.GestureRecognizers>
-                                    <!--<TapGestureRecognizer Tapped="ForgotPassword_Tapped"/>-->
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <!--<Grid BackgroundColor="White" Grid.Row="2" HorizontalOptions="Center"    VerticalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="8"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!--<Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="End"  HeightRequest="24" WidthRequest="24" VerticalOptions="Start" Padding="0" >
+                                    <Image Source="close.png"  HorizontalOptions="Center"  VerticalOptions="Center"     HeightRequest="14" WidthRequest="14" Margin="1">
+                                    </Image>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="CancelImageOfPopUpTapped"/>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                                <Label Grid.Column="1" Grid.Row="1" Text="Generate Pass Code" TextColor="{StaticResource CharcoalGrey}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" FontFamily="Lato-Regular.ttf#Lato-Regular" FontSize="16" />-->
+
+
+                            <Frame Padding="5" HasShadow="False" Grid.Column="1"  Grid.Row="0" OutlineColor="#dedede"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5">
+                                <Grid ColumnSpacing="0" Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="emailicon.png" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14" HeightRequest="11"></Image>
+                                    <Image Source="user.png" BackgroundColor="White" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14"  HeightRequest="11"></Image>
+                                    <Picker x:Name="Role" BackgroundColor="White"  ItemsSource="{Binding Roles}" ItemDisplayBinding="{Binding RoleName}" SelectedItem="{Binding SelectedRole,Mode=TwoWay}" TextColor="Black" HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="CenterAndExpand" Grid.Column="1" FontSize="14" FontFamily="Lato-Regular.ttf#Lato-Regular">
+                                        <Picker.HeightRequest>
+                                            <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
+                                        </Picker.HeightRequest>
+                                    </Picker>
+
+                                </Grid>
+                            </Frame>
+
+                            <Frame Padding="5" HasShadow="False" Grid.Column="1" Margin="0,10,0,0"  Grid.Row="2" OutlineColor="#dedede"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5">
+                                <Grid ColumnSpacing="0" Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="emailicon.png" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14" HeightRequest="11"></Image>
+                                    <Entry  x:Name="Email" Text="{Binding Email,Mode=TwoWay}"  Placeholder="Email" PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"   Grid.Column="1" HorizontalTextAlignment="Start" FontFamily="Lato-Regular.ttf#Lato-Regular" FontSize="14">
+                                        <Entry.HeightRequest>
+                                            <OnPlatform x:TypeArguments="x:Double" iOS="35" Android="40"/>
+                                        </Entry.HeightRequest>
+                                    </Entry>
+
+                                </Grid>
+                            </Frame>
+                            <Frame Padding="5" Grid.Column="1" Grid.Row="4" Margin="0,10,0,0" HasShadow="False" OutlineColor="#dedede" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"   CornerRadius="5" >
+                                <Grid ColumnSpacing="0" Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="mail.png"  Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="14" BackgroundColor="White"  HeightRequest="11"></Image>
+                                    <cc:EditorXF x:Name="Name" BackgroundColor="White" Text="{Binding Message,Mode=TwoWay}"  Placeholder="Message"  PlaceholderColor="#a8b6c8" TextColor="Black" HorizontalOptions="FillAndExpand" FontSize="14" 
+                         VerticalOptions="CenterAndExpand" Grid.Column="1"  FontFamily="Lato-Regular.ttf#Lato-Regular" HeightRequest="100">
+
+                                    </cc:EditorXF>
+                                </Grid>
+                            </Frame>
+                            <cc:CustomButton x:Name="btnHome"  Margin="0,10,0,0"  Grid.Column="1" Grid.Row="6" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Text="Generate Passcode"  TextColor="White" Clicked="Login_Clicked" CustomBorderColor="{StaticResource ThemeRedColor}"  FontSize="16"
+                                         CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5"  
+                                         FontFamily="Lato-Regular.ttf#Lato-Regular">
+                                <cc:CustomButton.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double" iOS="30" Android="40"/>
+                                </cc:CustomButton.HeightRequest>
+                            </cc:CustomButton>
+                            <Grid Grid.Row="7" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="4"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" TextColor="Gray"  Text="We will send a passcode on recipient mail with this message."  HorizontalOptions="Center" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontFamily="Lato-Regular.ttf#Lato-Regular" FontSize="12">
+                                    <Label.GestureRecognizers>
+                                        <!--<TapGestureRecognizer Tapped="ForgotPassword_Tapped"/>-->
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <!--<Grid BackgroundColor="White" Grid.Row="2" HorizontalOptions="Center"    VerticalOptions="FillAndExpand">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
@@ -118,13 +186,14 @@
                                         </Label.GestureRecognizers>
                                     </Label>
                                 </Grid>-->
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </StackLayout>
                 </ScrollView>
-            </Frame>
+            </Grid>
+       
 
-
-            <ActivityIndicator HorizontalOptions="CenterAndExpand" Grid.Row="0" 
+        <ActivityIndicator HorizontalOptions="CenterAndExpand" Grid.Row="0" 
                                VerticalOptions="CenterAndExpand"
                                HeightRequest="50"
                                WidthRequest="50"

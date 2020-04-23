@@ -7,10 +7,11 @@
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
+            <Color x:Key="backgroundColor">#AF1E2D</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
-  
-        <Grid RowSpacing="0">
+    <ContentPage.Content>
+        <Grid RowSpacing="0" BackgroundColor="White" VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
@@ -53,13 +54,16 @@
                         </cc:ImageCircle>
                     </StackLayout>
                 </StackLayout>
+                <syncfusion:SfListView  Grid.Row="1" x:Name="MenuItemListView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  ItemsSource="{Binding IconList}"  AutoFitMode="Height"  IsScrollBarVisible="True"  ItemSpacing="5"  ItemTapped="MenuItemListView_ItemTapped"  SelectionBackgroundColor="Transparent"  BackgroundColor="White" Padding="0,10,0,0"   QueryItemSize="ListView_QueryItemSize" >
 
-                <syncfusion:SfListView  Grid.Row="1" x:Name="MenuItemListView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  ItemsSource="{Binding Items}"  AutoFitMode="Height"  IsScrollBarVisible="True"  ItemSpacing="5"  ItemTapped="MenuItemListView_ItemTapped"  SelectionBackgroundColor="Transparent"  BackgroundColor="White" Padding="0,10,0,0"   QueryItemSize="ListView_QueryItemSize" >
                     <syncfusion:SfListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  HeightRequest="150">
-                                <Frame  HasShadow="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  CornerRadius="20"  Padding="1">
-                                    <Image Source="logo.png"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" >
+                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Frame Grid.Row="0" Grid.Column="0" HasShadow="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  CornerRadius="20"  Padding="1">
+                                    <Image Source="{Binding ImageSrc}"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" >
 
                                     </Image>
                                 </Frame>
@@ -70,6 +74,22 @@
                         <syncfusion:GridLayout SpanCount="2" />
                     </syncfusion:SfListView.LayoutManager>
                 </syncfusion:SfListView>
+                <!--<syncfusion:SfListView  Grid.Row="1" x:Name="MenuItemListView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  ItemsSource="{Binding IconList}"  AutoFitMode="Height"  IsScrollBarVisible="True"  ItemSpacing="5"  ItemTapped="MenuItemListView_ItemTapped"  SelectionBackgroundColor="Transparent"  BackgroundColor="White" Padding="0,10,0,0"   QueryItemSize="ListView_QueryItemSize" >
+                    <syncfusion:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  HeightRequest="150">
+                                <Frame  HasShadow="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  CornerRadius="20"  Padding="1">
+                                <Image Source="{Binding ImageSrc}"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" >
+
+                                    </Image>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </syncfusion:SfListView.ItemTemplate>
+                    <syncfusion:SfListView.LayoutManager>
+                        <syncfusion:GridLayout SpanCount="2" />
+                    </syncfusion:SfListView.LayoutManager>
+                </syncfusion:SfListView>-->
 
                 <Grid Grid.Row="2" RowSpacing="0"  BackgroundColor="#dedede" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="0" HeightRequest="60">
                     <Grid.ColumnDefinitions >
@@ -83,7 +103,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid x:Name="dashboard" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#dedede" Margin="0" Padding="0">
-                        <Image x:Name="dashboardMenu"  Source="dashboardSelect.png" BackgroundColor="#dedede"  HorizontalOptions="Center" WidthRequest="25" HeightRequest="25" VerticalOptions="Center" >
+                        <Image x:Name="dashboardMenu"  Source="Customers.png" BackgroundColor="#dedede"  HorizontalOptions="Center" WidthRequest="25" HeightRequest="25" VerticalOptions="Center" >
                         </Image>
                         <Grid.GestureRecognizers>
                             <!--<TapGestureRecognizer Tapped="Dashboard_Tapped"/>-->
@@ -97,14 +117,14 @@
                         </Grid.GestureRecognizers>
                     </Grid>
                     <Grid x:Name="notification" Grid.Row="0" Grid.Column="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#dedede" Margin="0" Padding="0">
-                        <Image Source="{Binding NotificationImage}"  BackgroundColor="#dedede"  HorizontalOptions="Center" WidthRequest="25" HeightRequest="25" VerticalOptions="Center" Margin="0"  >
+                        <Image Source="mail.png"  BackgroundColor="#dedede"  HorizontalOptions="Center" WidthRequest="25" HeightRequest="25" VerticalOptions="Center" Margin="0"  >
                         </Image>
                         <Grid.GestureRecognizers>
                             <!--<TapGestureRecognizer Tapped="Notification_Tapped"/>-->
                         </Grid.GestureRecognizers>
                     </Grid>
                     <Grid x:Name="mail" Grid.Row="0" Grid.Column="4" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#dedede" Margin="0" Padding="0">
-                        <Image Source="mail.png" BackgroundColor="#dedede"  HorizontalOptions="Center" WidthRequest="25" HeightRequest="25" VerticalOptions="Center" Margin="0" >
+                        <Image Source="Logout.png" BackgroundColor="#dedede"  HorizontalOptions="Center" WidthRequest="25" HeightRequest="25" VerticalOptions="Center" Margin="0" >
                         </Image>
                         <Grid.GestureRecognizers>
                             <!--<TapGestureRecognizer Tapped="Mail_Tapped"/>-->
@@ -127,14 +147,14 @@
                 <Grid Grid.Row="3" RowSpacing="0" BackgroundColor="#dedede" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="20"  Padding="0" IsVisible="{Binding IsSetMargin}"/>
 
             </Grid>
-       
-        <ActivityIndicator HorizontalOptions="CenterAndExpand"
+
+            <ActivityIndicator HorizontalOptions="CenterAndExpand"
                                VerticalOptions="CenterAndExpand"
                                HeightRequest="50"
                                WidthRequest="50"
                                Color="Red"
                                IsRunning="{Binding OperationInProgress}"
                                IsVisible="{Binding OperationInProgress}"/>
-    </Grid>
-
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>

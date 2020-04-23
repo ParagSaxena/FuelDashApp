@@ -1,4 +1,6 @@
-﻿using FuelDashApp.ViewModels;
+﻿using FuelDashApp.Helper;
+using FuelDashApp.ViewModels;
+using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +12,12 @@ using Xamarin.Forms.Xaml;
 
 namespace FuelDashApp.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class HomePage : ContentPage
-	{
-		public HomePage ()
-		{
-			InitializeComponent();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class HomePage : ContentPage
+    {
+        public HomePage()
+        {
+            InitializeComponent();
             this.BindingContext = new HomePageViewModel();
         }
         protected override bool OnBackButtonPressed()
@@ -60,10 +62,9 @@ namespace FuelDashApp.Views
 
         private async void Add_Tapped(object sender, EventArgs e)
         {
-            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(LoginPage))
+            if (!App.Locator.NavigationService.CurrentPageKey.Contains(Locator.SubMenu))
             {
-                // await Navigation.PushAsync(new HomePage());
-                await Navigation.PushAsync(new GenerateQRPage());
+                await Navigation.PushPopupAsync(new SubMenu());
             }
         }
 
@@ -74,7 +75,8 @@ namespace FuelDashApp.Views
 
         private void ListView_QueryItemSize(object sender, Syncfusion.ListView.XForms.QueryItemSizeEventArgs e)
         {
-
+            e.ItemSize = (App.ScreenWidth / 2 - 5);
+            e.Handled = true;
         }
     }
 }

@@ -93,6 +93,8 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CustomRenderer\BorderlessEditorRenderer.cs" />
+    <Compile Include="CustomRenderer\IClearCookiesImplementation.cs" />
     <Compile Include="CustomRenderer\ImageCircleRender.cs" />
     <Compile Include="CustomRenderer\MessageIOS.cs" />
     <Compile Include="Main.cs" />
@@ -157,6 +159,15 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommonServiceLocator">
+      <Version>2.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="MvvmLightLibs">
+      <Version>5.4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>2.0.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete">
       <Version>18.1.0.44</Version>
     </PackageReference>
@@ -170,6 +181,12 @@
       <Version>3.0.0.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.617" />
+    <PackageReference Include="XLabs.IoC">
+      <Version>2.0.5782</Version>
+    </PackageReference>
+    <PackageReference Include="XLabs.Platform">
+      <Version>2.0.5782</Version>
+    </PackageReference>
     <PackageReference Include="ZXing.Net.Mobile">
       <Version>2.4.1</Version>
     </PackageReference>

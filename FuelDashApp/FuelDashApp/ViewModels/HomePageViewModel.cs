@@ -41,14 +41,14 @@ namespace FuelDashApp.ViewModels
         }
         public HomePageViewModel()
         {
-
-            IconList.Add(new MenuItems { ImageSrc = "Inventory.png", Text = "JobSearch", GotoPage = "JobSearch" });
-           // IconList.Add(new MenuItems { ImageSrc = "calibrations.png", Text = "GetReady", GotoPage = "GetReady" });
-            IconList.Add(new MenuItems { ImageSrc = "Assets.png", Text = "MyDocument", GotoPage = "MyDocument" });
-            IconList.Add(new MenuItems { ImageSrc = "Customers.png", Text = "Customers", GotoPage = "MyJobs" });
-            IconList.Add(new MenuItems { ImageSrc = "Document.png", Text = "timeEntry", GotoPage = "timeEntry" });
-            IconList.Add(new MenuItems { ImageSrc = "Invoice.png", Text = "MyStubs", GotoPage = "MyStubs" });
+            App.IsPopupButtonEnable = true;
+            IconList.Add(new MenuItems { ImageSrc = "Assets.png", Text = "JobSearch", GotoPage = "JobSearch" });
+            IconList.Add(new MenuItems { ImageSrc = "Calibration.png", Text = "GetReady", GotoPage = "GetReady" });
+            //IconList.Add(new MenuItems { ImageSrc = "Customers.png", Text = "MyDocument", GotoPage = "MyDocument" });
+            IconList.Add(new MenuItems { ImageSrc = "Inventory.png", Text = "Customers", GotoPage = "MyJobs" });
+            IconList.Add(new MenuItems { ImageSrc = "Invoice.jpeg", Text = "timeEntry", GotoPage = "timeEntry" });
             IconList.Add(new MenuItems { ImageSrc = "ProductServices.png", Text = "MyStubs", GotoPage = "MyStubs" });
+            IconList.Add(new MenuItems { ImageSrc = "Reports.png", Text = "MyStubs", GotoPage = "MyStubs" });
             IconList.Add(new MenuItems { ImageSrc = "Settings.png", Text = "MyStubs", GotoPage = "MyStubs" });
             IconList.Add(new MenuItems { ImageSrc = "Timesheets.png", Text = "MyStubs", GotoPage = "MyStubs" });
 

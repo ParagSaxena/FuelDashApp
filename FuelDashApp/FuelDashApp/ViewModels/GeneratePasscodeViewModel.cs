@@ -13,6 +13,22 @@ namespace FuelDashApp.ViewModels
 {
     public class GeneratePasscodeViewModel : BaseViewModel
     {
+        private List<PasscodeModel> _passcode;
+        public List<PasscodeModel> PassCodeData
+        {
+            get
+            {
+                return _passcode;
+            }
+            set
+            {
+                if (_passcode != value)
+                {
+                    _passcode = value;
+                    OnPropertyChanged(nameof(PassCodeData));
+                }
+            }
+        }
         private List<Role> _roles;
         public List<Role> Roles
         {
@@ -105,12 +121,16 @@ namespace FuelDashApp.ViewModels
             OperationInProgress = true;
             // Roles = await new APIData().GetListData<Role>("User/GetRole", false);
 
-            Roles = await RolesProvider.GetRolesAsync();
-            Roles.RemoveAt(0);
+            var Rolelist = await RolesProvider.GetRolesAsync();
+            Roles = Rolelist.Where(i => i.RoleName != "Admin").ToList();
             SelectedRole = Roles?.FirstOrDefault();
             OperationInProgress = false;
         }
+        public async Task IsAlreadySendPasscode()
+        {
+            PassCodeData = await new APIData().GetListData<PasscodeModel>("User/GetPasscode?email=" + Email, false);
 
+        }
         public async Task GeneratePasscode()
         {
             if (OperationInProgress)
@@ -142,7 +162,7 @@ namespace FuelDashApp.ViewModels
             OperationInProgress = false;
         }
 
-        private void ValidateForm()
+        private async void ValidateForm()
         {
             IsValid = true;
             var Toast = DependencyService.Get<IMessage>();
@@ -157,6 +177,21 @@ namespace FuelDashApp.ViewModels
             if (!Regex.IsMatch(Email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
             {
                 Toast.LongAlert("Invalid email address."); IsValid = false; return;
+            }
+            await IsAlreadySendPasscode();
+            if (PassCodeData != null)
+            {
+                if (PassCodeData.Where(i => i.SenderID == App.UserId).FirstOrDefault() != null)
+                {
+                    if (PassCodeData.Where(i => i.SenderID == App.UserId).FirstOrDefault().SenderID == App.UserId &&
+                        PassCodeData.Where(i => i.SenderID == App.UserId).FirstOrDefault().IsSignedUp)
+                    {
+                        string msg = "This " + SelectedRole.RoleName + " is already a member od FuelDash portal.";
+                        Toast.LongAlert(msg); IsValid = false; return;
+                    }
+
+                }
+
             }
         }
     }

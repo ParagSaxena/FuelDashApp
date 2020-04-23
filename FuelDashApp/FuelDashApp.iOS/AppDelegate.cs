@@ -25,7 +25,7 @@ namespace FuelDashApp.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            ZXing.Net.Mobile.Forms.iOS.Platform.Init();
+            Rg.Plugins.Popup.Popup.Init();
             LoadApplication(new App());
             DependencyService.Register<MessageIOS>();
             return base.FinishedLaunching(app, options);

@@ -18,12 +18,12 @@
                 <ColumnDefinition Width="18"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Image  Source="SplashScreen.jpeg" Grid.Row="0" Grid.Column="0"   Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="5" Grid.RowSpan="2"/>
-            <cc:CustomButton  Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Log In" FontSize="16" TextColor="White"   CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5" FontFamily="Lato-Regular.ttf#Lato-Regular" Margin="0" Clicked="Login_Clicked" CustomBorderColor="#AF1E2D">
+            <cc:CustomButton  Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="End" IsEnabled="{Binding App.IsPopupButtonEnable}"  Text="Log In" FontSize="16" TextColor="White"   CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5" FontFamily="Lato-Regular.ttf#Lato-Regular" Margin="0" Clicked="Login_Clicked" CustomBorderColor="#AF1E2D">
                 <cc:CustomButton.HeightRequest>
                     <OnPlatform x:TypeArguments="x:Double" iOS="45" Android="59"/>
                 </cc:CustomButton.HeightRequest>
             </cc:CustomButton>
-            <cc:CustomButton Grid.Column="3" Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="End" Text="Scan QR" FontSize="16" TextColor="White"  CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5" FontFamily="Lato-Regular.ttf#Lato-Regular"   Margin="0"  Clicked="Signup_Clicked" CustomBorderColor="#AF1E2D">
+            <cc:CustomButton Grid.Column="3" Grid.Row="0" HorizontalOptions="FillAndExpand" VerticalOptions="End" IsEnabled="{Binding App.IsPopupButtonEnable}"  Text="Sign Up" FontSize="16" TextColor="White"  CustomBackgroundColor="{StaticResource ThemeRedColor}" CustomBorderRadius="5" FontFamily="Lato-Regular.ttf#Lato-Regular"   Margin="0"  Clicked="Signup_Clicked" CustomBorderColor="#AF1E2D">
                 <cc:CustomButton.HeightRequest>
                     <OnPlatform x:TypeArguments="x:Double" iOS="45" Android="59"/>
                 </cc:CustomButton.HeightRequest>

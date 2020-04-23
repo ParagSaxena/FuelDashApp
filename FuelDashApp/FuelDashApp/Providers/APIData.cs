@@ -154,7 +154,7 @@ namespace FuelDashApp.Providers
                 {
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 data = default(T);
             }

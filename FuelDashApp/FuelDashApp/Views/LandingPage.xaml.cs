@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Rg.Plugins.Popup.Services;
+
+using Rg.Plugins.Popup.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,27 +12,37 @@ using Xamarin.Forms.Xaml;
 
 namespace FuelDashApp.Views
 {
-	//[XamlCompilation(XamlCompilationOptions.Compile)]
+	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LandingPage : ContentPage
 	{
 		public LandingPage ()
 		{
 			InitializeComponent ();
-		}
+            App.IsPopupButtonEnable = true;
+
+        }
         private async void Login_Clicked(object sender, EventArgs e)
         {
-            if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(LoginPage))
+            if (App.IsPopupButtonEnable)
             {
-               // await Navigation.PushAsync(new HomePage());
-                await Navigation.PushAsync(new LoginPage());
+                if (Navigation.NavigationStack[Navigation.NavigationStack.Count - 1].GetType() != typeof(LoginPage))
+                {
+                    App.IsPopupButtonEnable = false;
+                    await PopupNavigation.Instance.PushAsync(new LoginPage());
+
+                }
             }
         }
         private async void Signup_Clicked(object sender, EventArgs e)
         {
-          // if (Navigation.NavigationStack.Count == 0 || Navigation.NavigationStack.Last().GetType() != typeof(SignupPage))
-           //{
-                await Navigation.PushAsync(new SignupPage());
-           //}
+            if (App.IsPopupButtonEnable)
+            {
+                if (Navigation.NavigationStack[Navigation.NavigationStack.Count - 1].GetType() != typeof(SignupPage))
+                {
+                    App.IsPopupButtonEnable = false;
+                    await Navigation.PushPopupAsync(new SignupPage(), false);
+                }
+            }
         }
 
     }
