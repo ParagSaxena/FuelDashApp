@@ -25,12 +25,18 @@ namespace FuelDashApp.Views
         {
             ViewModel.GetDepartmentsAsync();
             ViewModel.GetPrioritiesAsync();
+            ViewModel.GetSitesAsync();
             base.OnAppearing();
         }
 
         private void FormatEmail_Clicked(object sender, EventArgs e)
         {
             ViewModel.ParseEamil(EmailTextEditor.Text);
+        }
+
+        private void SaveButton_Clicked(object sender, EventArgs e)
+        {
+            ViewModel.CreateWorkOrderAsync();
         }
     }
 }

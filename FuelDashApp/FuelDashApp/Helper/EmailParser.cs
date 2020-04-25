@@ -9,9 +9,9 @@ namespace FuelDashApp.Helper
     {
         public static void ParseEmail(string email,
             out string referenceNumber,
-            out string dateEntered,
+            out DateTime dateEntered,
             out string priority,
-            out string estimatedArrival,
+            out DateTime estimatedArrival,
             out string site,
             out string address,
             out string problemDescription)
@@ -19,13 +19,13 @@ namespace FuelDashApp.Helper
             referenceNumber = Between(email, "The referenced work order number is", "Here").Replace("\r\n", "");
             Debug.WriteLine("ReferenceNo.:" + referenceNumber);
 
-            dateEntered = Between(email, "Date Entered:", "Priority").Replace("\r\n", "");
+            dateEntered =Convert.ToDateTime(Between(email, "Date Entered:", "Priority").Replace("\r\n", ""));
             Debug.WriteLine("Date Entered:" + dateEntered);
 
             priority = Between(email, "Priority:", "Estimated").Replace("\r\n", "");
             Debug.WriteLine("Priority:" + priority);
 
-            estimatedArrival = Between(email, "Target:", "Region:").Replace("\r\n", "");
+            estimatedArrival = Convert.ToDateTime(Between(email, "Target:", "Region:").Replace("\r\n", ""));
             Debug.WriteLine("EstimatedArrival:" + estimatedArrival);
 
             //region = Between(email, "Region:", "Division:").Replace("\r\n", "");

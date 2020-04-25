@@ -43,8 +43,8 @@ namespace FuelDashApp.ViewModels
                 }
             }
         }
-        private string _receivedDate;
-        public string DateReceived
+        private DateTime _receivedDate = DateTime.Now;
+        public DateTime DateReceived
         {
             get
             {
@@ -59,8 +59,8 @@ namespace FuelDashApp.ViewModels
                 }
             }
         }
-        private string _deadlineDate;
-        public string DeadlineDate
+        private DateTime _deadlineDate = DateTime.Now;
+        public DateTime DeadlineDate
         {
             get
             {
@@ -212,6 +212,42 @@ namespace FuelDashApp.ViewModels
         }
 
 
+        private List<Site> _sites;
+        public List<Site> Sites
+        {
+            get
+            {
+                return _sites;
+            }
+            set
+            {
+                if (_sites != value)
+                {
+                    _sites = value;
+                    OnPropertyChanged(nameof(Sites));
+                }
+            }
+        }
+
+        private Site _selectedSite;
+        public Site SelectedSite
+        {
+            get
+            {
+                return _selectedSite;
+            }
+            set
+            {
+                if (_selectedSite != value)
+                {
+                    _selectedSite = value;
+                    Address = _selectedSite?.Address ?? string.Empty;
+                    OnPropertyChanged(nameof(SelectedSite));
+                }
+            }
+        }
+
+
         public void ParseEamil(string email)
         {
             EmailParser.ParseEmail(email, out _referenceNumber, out _receivedDate, out _priority, out _deadlineDate, out _siteNumber, out _address, out _problemDescription);
@@ -227,14 +263,47 @@ namespace FuelDashApp.ViewModels
 
         public async Task GetDepartmentsAsync()
         {
+            OperationInProgress = true;
             Departments = await DepartmentsProvider.GetDepartmentsAsync();
             SelectedDeparment = Departments?.FirstOrDefault();
+            OperationInProgress = false;
         }
 
         public async Task GetPrioritiesAsync()
         {
+            OperationInProgress = true;
             Priorities = await PrioritiesProvider.GetPrioritiesAsync();
             SelectedPriority = Priorities?.FirstOrDefault();
+            OperationInProgress = false;
+        }
+
+        public async Task GetSitesAsync()
+        {
+            OperationInProgress = true;
+            Sites = await SitesProvider.GetSitesAsync();
+            SelectedSite = Sites?.FirstOrDefault();
+            OperationInProgress = false;
+        }
+
+        public async Task CreateWorkOrderAsync()
+        {
+            if(OperationInProgress)
+            {
+                return;
+            }
+            OperationInProgress = true;
+            var result =await WorkOrderProvider.CreateWorkOrderAsync(0, 
+                DeadlineDate,
+                -1,
+                DateTime.Now,
+                App.UserId,
+                DateReceived,
+                DateTime.Now,
+                -1,
+                SelectedPriority.PriorityID,
+                ProblemDescription,
+                ActivityStatusEnum.Open.ToString());
+            OperationInProgress = false;
         }
     }
 
