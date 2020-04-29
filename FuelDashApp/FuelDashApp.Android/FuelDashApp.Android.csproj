@@ -70,6 +70,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
       <Version>18.1.0.44</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker">
+      <Version>18.1.0.45</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Animated.Vector.Drawable">
       <Version>28.0.0.3</Version>
     </PackageReference>

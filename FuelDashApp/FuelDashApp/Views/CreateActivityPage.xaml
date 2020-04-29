@@ -3,41 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FuelDashApp.Views.CreateActivityPage"
              xmlns:cc="clr-namespace:FuelDashApp.Views.CustomControls"
+             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
              BackgroundColor="White"
              Title="Create New Activity">
     <ContentPage.Content>
-        <Grid Margin="12">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <ScrollView Grid.Row="0">
-                <StackLayout Spacing="8" >
-                    <Entry Placeholder="Service Center" />
-                    <Entry Placeholder="Work Order Number"
+        <Grid>
+            <Grid Margin="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollView Grid.Row="0">
+                    <StackLayout Spacing="8" >
+                        <Entry Placeholder="Service Center" />
+                        <Entry Placeholder="Work Order Number"
                            Text="{Binding ReferenceNumber}"/>
-                    <Entry Placeholder="Site Number"
-                           Text="{Binding SiteNumber}"/>
-                    <Entry Placeholder="Address"
+                        <autocomplete:SfAutoComplete HeightRequest="40"
+                                                 DataSource="{Binding Sites}"
+                                                 DisplayMemberPath="FacilityName"
+                                                 SelectedItem="{Binding SelectedSite}">
+                        </autocomplete:SfAutoComplete>
+                        <Entry Placeholder="Address"
                            Text="{Binding Address}"/>
-                    <cc:CustomPicker Placeholder="Priority"
+                        <cc:CustomPicker Placeholder="Priority"
                                      ItemsSource="{Binding Priorities}"
                                      ItemDisplayBinding="{Binding Name}"
                                      SelectedItem="{Binding SelectedPriority}"/>
-                    <Entry Placeholder="Problem Description"
+                        <Entry Placeholder="Problem Description"
                            Text="{Binding ProblemDescription}"/>
-                    <cc:CustomPicker Placeholder="Department"
+                        <cc:CustomPicker Placeholder="Department"
                                      ItemsSource="{Binding Departments}"
                                      ItemDisplayBinding="{Binding Name}"
                                      SelectedItem="{Binding SelectedDeparment}"/>
-                    <Entry Placeholder="Received"
-                           Text="{Binding DateReceived}"/>
-                    <Entry Placeholder="Deadline"
-                           Text="{Binding DeadlineDate}"/>
-                    <Editor Placeholder="Copy and Paste Email"
+                        <Label Text="Received Date"/>
+                        <DatePicker Date="{Binding DateReceived}"
+                                    Margin="0,-8,0,0"/>
+                        <Label Text="Deadline Date"/>
+                        <DatePicker Date="{Binding DeadlineDate}"
+                                    Margin="0,-8,0,0"/>
+                        <Editor Placeholder="Copy and Paste Email"
                             x:Name="EmailTextEditor"
                             AutoSize="TextChanges"/>
-                    <Button Grid.Row="1"
+                        <Button Grid.Row="1"
                     Text="Format Email"
                     BackgroundColor="{StaticResource ThemeRedColor}"
                     TextColor="White"
@@ -45,15 +53,24 @@
                     HeightRequest="40"
                     Clicked="FormatEmail_Clicked"/>
 
-                </StackLayout>
-            </ScrollView>
-            <Button Grid.Row="1"
+                    </StackLayout>
+                </ScrollView>
+                <Button Grid.Row="1"
                     Text="Save"
                     BackgroundColor="{StaticResource ThemeRedColor}"
                     TextColor="White"
                     Margin="0,12,0,0"
-                    HeightRequest="40"/>
-        </Grid>
+                    HeightRequest="40"
+                    Clicked="SaveButton_Clicked"/>
+            </Grid>
 
+            <ActivityIndicator HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               HeightRequest="50"
+                               WidthRequest="50"
+                               Color="Red"
+                               IsRunning="{Binding OperationInProgress}"
+                               IsVisible="{Binding OperationInProgress}"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
