@@ -3,11 +3,9 @@ using FuelDashApp.ViewModels;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -15,7 +13,7 @@ using Xamarin.Forms.Xaml;
 
 namespace FuelDashApp.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditProfilePage : ContentPage
 	{
         ImageSource _imageSource;

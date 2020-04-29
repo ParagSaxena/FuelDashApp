@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FuelDashApp.Models
+﻿namespace FuelDashApp.Models
 {
     public class MenuItems
     {
@@ -10,5 +6,8 @@ namespace FuelDashApp.Models
         public string Text { get; set; }
         public string GotoPage { get; set; }
         public double FontSize { get; set; }
+        public MenuItems()
+        {
+        }
     }
 }

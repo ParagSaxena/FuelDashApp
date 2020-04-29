@@ -4,7 +4,6 @@ using FuelDashApp.ViewModels;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using System;
-using System.Linq;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

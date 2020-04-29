@@ -3,18 +3,14 @@ using FuelDashApp.Services;
 using FuelDashApp.ViewModels;
 using Rg.Plugins.Popup.Pages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace FuelDashApp.Views
 {
-	//[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ForgotPasswordPage : PopupPage
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ForgotPasswordPage : PopupPage
     {
 		public ForgotPasswordPage ()
 		{

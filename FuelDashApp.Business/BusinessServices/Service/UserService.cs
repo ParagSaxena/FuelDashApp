@@ -1,15 +1,12 @@
-﻿using System;
+﻿using FuelDashApp.Business.BusinessDTO;
+using Headway.Recruiting;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
-using FuelDashApp.Business.BusinessDTO;
-using FuelDashApp.Business.Sql;
-using Headway.Recruiting;
 using static FuelDashApp.Business.BusinessDTO.ActivityStatus;
 
 namespace FuelDashApp.Business.BusinessServices.Service

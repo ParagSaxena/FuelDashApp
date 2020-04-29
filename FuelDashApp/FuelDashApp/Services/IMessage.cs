@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FuelDashApp.Services
+﻿namespace FuelDashApp.Services
 {
     public interface IMessage
     {

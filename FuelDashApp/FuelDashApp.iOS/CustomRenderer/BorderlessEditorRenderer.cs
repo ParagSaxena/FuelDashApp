@@ -1,5 +1,5 @@
-﻿using FuelDashApp.Helper;
-using FuelDashApp.iOS.CustomRenderer;
+﻿using FuelDashApp.iOS.CustomRenderer;
+using FuelDashApp.Views.CustomControls;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;

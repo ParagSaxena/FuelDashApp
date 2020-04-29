@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics.Drawables;
 using Android.Util;
 using FuelDashApp.Droid.CustomRenderers;
 using FuelDashApp.Views.CustomControls;
+using System;
+using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 

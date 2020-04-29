@@ -1,8 +1,7 @@
-﻿using FuelDashApp.Models;
-using System;
+﻿using FuelDashApp.Helper;
+using FuelDashApp.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace FuelDashApp.ViewModels
 {
@@ -42,7 +41,7 @@ namespace FuelDashApp.ViewModels
         public HomePageViewModel()
         {
             App.IsPopupButtonEnable = true;
-            IconList.Add(new MenuItems { ImageSrc = "Assets.png", Text = "JobSearch", GotoPage = "JobSearch" });
+            IconList.Add(new MenuItems { ImageSrc = "Assets.png", Text = "WorkOrder", GotoPage = "WorkOrder" });
             IconList.Add(new MenuItems { ImageSrc = "Calibration.png", Text = "GetReady", GotoPage = "GetReady" });
             //IconList.Add(new MenuItems { ImageSrc = "Customers.png", Text = "MyDocument", GotoPage = "MyDocument" });
             IconList.Add(new MenuItems { ImageSrc = "Inventory.png", Text = "Customers", GotoPage = "MyJobs" });
@@ -57,13 +56,16 @@ namespace FuelDashApp.ViewModels
 
         public async void GoToPage(MenuItems item)
         {
-            //if (item.GotoPage == "JobSearch")
-            //{
-            //    string uri = "https://headway-workforce-solutions.jobs.net/en-US/";
-            //    await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
-
-            //}
-        }
+            if (item.GotoPage == "WorkOrder")
+            {
+                if (App.Locator.NavigationService.CurrentPageKey != null && !App.Locator.NavigationService.CurrentPageKey.Contains(Locator.CreateActivityPage))
+                {
+                    App.Locator.NavigationService.NavigateTo(Locator.CreateActivityPage);
+                    //await Navigation.PopPopupAsync();
+                }
+                
+            }
         }
     }
+}
 

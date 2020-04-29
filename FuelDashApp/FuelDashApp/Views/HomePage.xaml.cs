@@ -1,11 +1,8 @@
 ﻿using FuelDashApp.Helper;
+using FuelDashApp.Models;
 using FuelDashApp.ViewModels;
 using Rg.Plugins.Popup.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,10 +12,12 @@ namespace FuelDashApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
+        private HomePageViewModel _vm;
         public HomePage()
         {
             InitializeComponent();
-            this.BindingContext = new HomePageViewModel();
+            _vm = new HomePageViewModel();
+            BindingContext = _vm;
         }
         protected override bool OnBackButtonPressed()
         {
@@ -70,7 +69,7 @@ namespace FuelDashApp.Views
 
         private void MenuItemListView_ItemTapped(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
         {
-
+            _vm.GoToPage((MenuItems)e.ItemData);
         }
 
         private void ListView_QueryItemSize(object sender, Syncfusion.ListView.XForms.QueryItemSizeEventArgs e)

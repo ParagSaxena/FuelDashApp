@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-
-using Foundation;
+﻿using Foundation;
 using FuelDashApp.Services;
 using GlobalToast;
+using System;
+using System.IO;
 using UIKit;
 
 namespace FuelDashApp.iOS.CustomRenderer

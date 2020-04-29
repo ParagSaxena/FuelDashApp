@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FuelDashApp.iOS.CustomRenderer;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Foundation;
-using FuelDashApp.iOS.CustomRenderer;
-using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 

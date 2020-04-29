@@ -15,6 +15,7 @@ namespace FuelDashApp.Helper
         public const string GeneratePassCode = "GeneratePassCode";
         public const string HomePage = "HomePage";
         public const string SubMenu = "SubMenu";
+        public const string CreateActivityPage = "CreateActivityPage";
         static Locator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -23,6 +24,7 @@ namespace FuelDashApp.Helper
             navigation.Configure(Locator.GeneratePassCode, typeof(GenerateQRPage));
             navigation.Configure(Locator.HomePage, typeof(HomePage));
             navigation.Configure(Locator.SubMenu, typeof(SubMenu));
+            navigation.Configure(Locator.CreateActivityPage, typeof(CreateActivityPage));
             SimpleIoc.Default.Register(() => navigation);
             resolverContainer.Register<IDisplay>(t => t.Resolve<IDevice>().Display);
             Resolver.SetResolver(resolverContainer.GetResolver());

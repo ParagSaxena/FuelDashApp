@@ -1,8 +1,5 @@
 ﻿using FuelDashApp.Models;
 using FuelDashApp.Providers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FuelDashApp.ViewModels
